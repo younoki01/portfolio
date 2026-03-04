@@ -587,15 +587,13 @@ footer {
   .hero-h1 { font-size: clamp(3.5rem, 10vw, 8rem); }
   .hero-bottom { grid-template-columns: 1fr; }
   .hero-bl { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 1.5rem 2rem; }
-  .hero-br { padding: 1.5rem 2rem; justify-content: flex-start; gap: .8rem; }
+  .hero-br { padding: 1.5rem 2rem; justify-content: flex-start; }
   .features { grid-template-columns: 1fr; }
   .features-label { border-right: none; border-bottom: 1px solid var(--rule); padding: 4rem 2rem 3rem; }
   .features-grid { grid-template-columns: repeat(2,1fr); }
   .program-header { padding: 4rem 2rem 2rem; }
-  .prog-row { padding: 1.8rem 2rem; grid-template-columns: 2.5rem 1fr 80px; gap: 1rem; }
-  .prog-price { font-size: 1rem; }
+  .prog-row { padding: 1.8rem 2rem; grid-template-columns: 2.5rem 1fr 80px; }
   .schedule-section { padding: 4rem 2rem 5rem; }
-  .schedule-grid { grid-template-columns: repeat(7,1fr); }
   .trainer-section { grid-template-columns: 1fr; }
   .trainer-card { border-right: none; border-bottom: 1px solid var(--rule); }
   .pricing-grid { grid-template-columns: 1fr; }
@@ -612,41 +610,21 @@ footer {
   .hero { padding-top: 56px; }
   .hero-left { padding: 3.5rem 1.5rem 2.5rem; }
   .hero-h1 { font-size: clamp(3rem, 14vw, 6rem); }
-  .hero-sub { font-size: .9rem; }
   .features-grid { grid-template-columns: 1fr; }
-  .prog-row { grid-template-columns: 2rem 1fr; padding: 1.5rem 1.5rem; }
+  .prog-row { grid-template-columns: 2rem 1fr; padding: 1.5rem; }
   .prog-tags, .prog-price { display: none; }
-  .prog-name { font-size: 1.2rem; }
   .schedule-grid { grid-template-columns: repeat(4,1fr); }
-  .sch-head:nth-child(n+5):nth-child(-n+7),
-  .sch-cell:nth-child(7n+5),
-  .sch-cell:nth-child(7n+6),
-  .sch-cell:nth-child(7n+7) { display: none; }
   .cta-h { font-size: clamp(2.5rem, 10vw, 4rem); }
-  .btn-hero-main, .btn-hero-ghost { font-size: .65rem; padding: .75rem 1.4rem; }
   footer { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 480px) {
   .hero-h1 { font-size: clamp(2.8rem, 16vw, 4.5rem); }
-  .prog-row { padding: 1.2rem 1.2rem; }
   .schedule-grid { grid-template-columns: repeat(3,1fr); }
-  .sch-head:nth-child(n+4):nth-child(-n+7),
-  .sch-cell:nth-child(7n+4),
-  .sch-cell:nth-child(7n+5),
-  .sch-cell:nth-child(7n+6),
-  .sch-cell:nth-child(7n+7) { display: none; }
   footer { grid-template-columns: 1fr; }
 }
-
 </style>
 </head>
 <body>
-<div id="back-bar" style="position:fixed;top:0;left:0;right:0;z-index:9999;height:48px;background:rgba(250,250,248,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #e8e8e4;display:flex;align-items:center;padding:0 2rem;gap:1.5rem;box-sizing:border-box;">
-  <a href="/" style="text-decoration:none;color:#111110;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;transition:opacity .2s;" onmouseover="this.style.opacity='.5'" onmouseout="this.style.opacity='1'">&#8592; Portfolio</a>
-  <span style="color:#e8e8e4;font-size:.7rem;">|</span>
-  <span style="color:#999994;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;">Works</span>
-</div>
-<div style="height:48px;"></div>
 
 <div id="cur"></div>
 

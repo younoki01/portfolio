@@ -823,35 +823,32 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   nav { padding: 0 2rem; }
-  .nav-links { gap: 1.5rem; }
-  .hero-inner { grid-template-columns: 1fr; padding: 5rem 2rem 3rem; }
-  .hero-right { border-left: none; border-top: 1px solid var(--gold-dim); padding: 2rem; }
-  .hero-h1 { font-size: clamp(3.5rem, 10vw, 7rem); }
-  .about-grid, .menu-grid-2col { grid-template-columns: 1fr; }
+  .hero { flex-direction: column; }
+  .hero-left, .hero-right { width: 100%; }
+  .hero-right { border-left: none; border-top: 1px solid rgba(201,169,110,.15); }
+  .hero-title { font-size: clamp(3.5rem, 10vw, 7rem); }
   .menu-grid { grid-template-columns: repeat(2,1fr); }
-  .staff-grid { grid-template-columns: repeat(2,1fr); }
-  .access-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: repeat(2,1fr); }
+  .stylist-grid { grid-template-columns: repeat(2,1fr); }
+  .access-section .access-inner { flex-direction: column; }
 }
 @media (max-width: 768px) {
   nav { padding: 0 1.2rem; height: 56px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: block; top: 56px; }
-  .hero-inner { padding: 3.5rem 1.5rem 2.5rem; }
-  .hero-h1 { font-size: clamp(3rem, 14vw, 5rem); }
+  .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
   .menu-grid { grid-template-columns: 1fr; }
-  .staff-grid { grid-template-columns: 1fr; }
-  .cta-inner { padding: 4rem 1.5rem; }
-  .footer-grid { grid-template-columns: 1fr; }
+  .stylist-grid { grid-template-columns: 1fr; }
+  .section-header { padding: 3.5rem 1.5rem 2rem; }
+  .menu-inner { padding: 0 1.5rem 3rem; }
+  .stylist-inner { padding: 0 1.5rem 3rem; }
+  .reserve-inner { padding: 4rem 1.5rem; }
 }
 @media (max-width: 480px) {
-  .hero-h1 { font-size: clamp(2.5rem, 16vw, 4rem); }
+  .hero-title { font-size: clamp(2.5rem, 16vw, 4rem); }
   .section-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
-  .about-grid > *, .menu-grid-2col > * { padding: 2rem 1.2rem; }
-  .cta-inner { padding: 3rem 1.2rem; }
+  .reserve-inner { padding: 3rem 1.2rem; }
 }
-
 </style>
 </head>
 <body>
