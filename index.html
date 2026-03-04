@@ -301,8 +301,6 @@ nav {
   cursor: pointer;
   position: relative;
   transition: background .2s;
-  text-decoration: none;
-  color: inherit;
 }
 .work-item:last-child { border-bottom: 1px solid var(--rule); }
 .work-item::after {
@@ -540,6 +538,217 @@ footer {
 .foot-links { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
 .foot-links a { font-family:'Noto Sans JP',sans-serif; font-size:.73rem; color:var(--ink2); text-decoration:none; letter-spacing:.04em; transition:color .2s; }
 .foot-links a:hover { color:var(--ink); }
+
+
+/* ── HAMBURGER & MOBILE MENU ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px;
+  background: none; border: none; cursor: none; padding: 4px;
+}
+.nav-hamburger span {
+  display: block; width: 100%; height: 1.5px;
+  background: var(--ink);
+  transition: transform .3s ease, opacity .3s ease;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 490;
+  padding: 3rem 1.5rem;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+}
+.mobile-menu.open {
+  opacity: 1; transform: none; pointer-events: all;
+}
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.mobile-menu ul li { border-bottom: 1px solid var(--rule); }
+.mobile-menu ul li a {
+  display: block; padding: 1.5rem 0;
+  font-family: "Cormorant Garamond", serif; font-size: 2rem;
+  font-weight: 300; letter-spacing: .04em; color: var(--ink);
+  text-decoration: none; transition: color .2s, letter-spacing .2s;
+}
+.mobile-menu ul li a:hover { color: var(--accent); letter-spacing: .08em; }
+
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: block; }
+  nav { height: 56px; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+
+/* タブレット横 */
+@media (max-width: 1024px) {
+  nav { padding: 0 2rem; }
+  .nav-menu { gap: 1.5rem; }
+
+  .hero { padding: 64px 0 0; }
+  .hero-main { grid-template-columns: 1fr; }
+  .hero-left {
+    padding: 5rem 2rem 3rem;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-right { padding: 3rem 2rem 3rem; }
+  .hero-h1 { font-size: clamp(3.5rem, 10vw, 7rem); }
+  .hero-bottom { grid-template-columns: 1fr; }
+  .hero-bl { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.5rem 2rem; }
+  .hero-br { padding: 1.5rem 2rem; justify-content: flex-start; }
+
+  .services { grid-template-columns: 1fr; }
+  .services-label {
+    padding: 4rem 2rem 3rem;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .service-row { padding: 2rem 2rem; }
+
+  .works-header { padding: 4rem 2rem 2rem; }
+  .works-table-head { padding: 0.8rem 2rem; grid-template-columns: 36px 1fr 120px 24px; }
+  .work-item { padding: 1.5rem 2rem; grid-template-columns: 36px 1fr 120px 24px; }
+
+  .about { grid-template-columns: 1fr; }
+  .about-left {
+    padding: 4rem 2rem 3rem;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .about-card { position: static; }
+  .about-right { padding: 3rem 2rem 4rem; }
+
+  .process-header { padding: 4rem 2rem 2rem; }
+  .process-steps { grid-template-columns: repeat(2,1fr); }
+
+  .pricing-header { padding: 4rem 2rem 2rem; }
+  .pricing-grid { grid-template-columns: 1fr; border-left: 1px solid var(--rule); }
+  .plan { border-right: 1px solid var(--rule); }
+
+  .cta-section { grid-template-columns: 1fr; }
+  .cta-left {
+    padding: 5rem 2rem 3rem;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cta-right { padding: 3rem 2rem 5rem; background: var(--ink); }
+
+  footer { grid-template-columns: repeat(2,1fr); }
+}
+
+/* タブレット縦・スマホ大 */
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .nav-menu { display: none; }
+
+  .hero-left { padding: 4rem 1.5rem 2.5rem; }
+  .hero-right { padding: 2.5rem 1.5rem; }
+  .hero-h1 { font-size: clamp(3rem, 14vw, 5.5rem); }
+  .hero-bl, .hero-br { padding: 1.2rem 1.5rem; }
+  .hero-br { flex-direction: column; align-items: flex-start; gap: .8rem; }
+
+  .services-label { padding: 3.5rem 1.5rem 2.5rem; }
+  .service-row {
+    padding: 2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: .8rem;
+  }
+  .srv-price { padding-top: 0; }
+
+  .works-header { padding: 3.5rem 1.5rem 2rem; flex-direction: column; gap: .8rem; align-items: flex-start; }
+  .works-table-head { display: none; }
+  .work-item {
+    padding: 1.4rem 1.5rem;
+    grid-template-columns: 28px 1fr 24px;
+    gap: 1rem;
+  }
+  .w-tags { display: none; }
+
+  .about-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .about-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .kpi-row { grid-template-columns: repeat(3,1fr); }
+
+  .process-header { padding: 3.5rem 1.5rem 2rem; }
+  .process-steps { grid-template-columns: 1fr; }
+  .process-step { border-right: none; border-bottom: 1px solid var(--rule); }
+
+  .pricing-header { padding: 3.5rem 1.5rem 2rem; }
+  .plan { padding: 2.5rem 2rem; }
+
+  .cta-left { padding: 4rem 1.5rem 2.5rem; }
+  .cta-right { padding: 2.5rem 1.5rem 4rem; }
+  .cta-btns { flex-direction: column; }
+  .cta-h { font-size: clamp(2rem, 8vw, 3.5rem); }
+
+  footer { grid-template-columns: 1fr 1fr; }
+  .foot-cell { padding: 2rem 1.5rem; }
+}
+
+/* スマホ */
+@media (max-width: 480px) {
+  nav { height: 56px; }
+  .nav-logo { font-size: .85rem; }
+  .nav-cta { padding: .45rem 1rem; font-size: .58rem; }
+
+  .hero { padding-top: 56px; }
+  .hero-left { padding: 3rem 1.2rem 2rem; }
+  .hero-h1 { font-size: clamp(2.8rem, 16vw, 4.5rem); }
+  .hero-eyebrow { font-size: .52rem; margin-bottom: 1.5rem; }
+  .hero-right { padding: 2rem 1.2rem; }
+  .chip { padding: .7rem 1rem; }
+  .chip-label, .chip-val { font-size: .65rem; }
+  .hero-bl, .hero-br { padding: 1rem 1.2rem; }
+  .hero-cta { font-size: .62rem; padding: .75rem 1.5rem; }
+  .hero-cta-ghost { font-size: .55rem; }
+
+  .ticker-track { gap: 2rem; }
+  .ticker-track span { font-size: .5rem; }
+
+  .eyebrow { font-size: .5rem; }
+  .big-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+
+  .services-label { padding: 2.5rem 1.2rem 2rem; }
+  .service-row { padding: 1.8rem 1.2rem; }
+  .srv-name { font-size: 1.3rem; }
+
+  .works-header { padding: 2.5rem 1.2rem 1.5rem; }
+  .work-item { padding: 1.2rem 1.2rem; gap: .8rem; }
+  .w-name { font-size: 1.15rem; }
+  .w-cat { font-size: .6rem; }
+
+  .about-left { padding: 2.5rem 1.2rem 2rem; }
+  .about-card-img { height: 200px; }
+  .about-monogram { font-size: 5rem; }
+  .about-right { padding: 2rem 1.2rem 2.5rem; }
+  .about-lead { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+  .kpi-row { grid-template-columns: repeat(3,1fr); }
+  .kpi { padding: 1.5rem 1rem; }
+  .kpi-n { font-size: 1.8rem; }
+
+  .process-header { padding: 2.5rem 1.2rem 1.5rem; }
+  .process-step { padding: 2.5rem 1.5rem; }
+  .ps-n { font-size: 3rem; }
+
+  .pricing-header { padding: 2.5rem 1.2rem 1.5rem; }
+  .plan { padding: 2rem 1.5rem; }
+  .plan-price { font-size: 2.4rem; }
+
+  .cta-left { padding: 3rem 1.2rem 2rem; }
+  .cta-right { padding: 2rem 1.2rem 3rem; }
+
+  footer { grid-template-columns: 1fr; }
+  .foot-cell { padding: 1.8rem 1.2rem; }
+}
 </style>
 </head>
 <body>
@@ -556,7 +765,20 @@ footer {
     <li><a href="#pricing">Pricing</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Contact</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- モバイルメニュー -->
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="#works" onclick="closeMenu()">Works</a></li>
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -659,11 +881,11 @@ footer {
       <div class="eyebrow">Works</div>
       <h2 class="big-title">制作<em>実績</em></h2>
     </div>
-    <span class="works-count">04 projects</span>
+    <span class="works-count">06 projects</span>
   </div>
   <div class="works-list">
 
-    <a href="/works/lumiere/" class="work-item reveal"
+    <div class="work-item reveal"
       data-pb="linear-gradient(135deg,#0a0a0a,#2d2520,#0a0a0a)"
       data-pc="#c9983a" data-pl="Hair Salon" data-pn="LUMIÈRE">
       <div class="w-num">001</div>
@@ -676,9 +898,9 @@ footer {
         <span class="w-tag">Animation</span>
       </div>
       <div class="w-arr">↗</div>
-    </a>
+    </div>
 
-    <a href="/works/petale/" class="work-item reveal"
+    <div class="work-item reveal"
       data-pb="linear-gradient(135deg,#fdf0f4,#f9d5e2,#f0a0b8)"
       data-pc="#b03060" data-pl="Nail Salon" data-pn="pétale">
       <div class="w-num">002</div>
@@ -691,9 +913,9 @@ footer {
         <span class="w-tag">JS Animation</span>
       </div>
       <div class="w-arr">↗</div>
-    </a>
+    </div>
 
-    <a href="/works/dewi-spa/" class="work-item reveal"
+    <div class="work-item reveal"
       data-pb="linear-gradient(135deg,#1c1008,#3d2010,#1c1008)"
       data-pc="#d4a84b" data-pl="Bridal Esthetic" data-pn="DEWI SPA">
       <div class="w-num">003</div>
@@ -706,9 +928,9 @@ footer {
         <span class="w-tag">SVG Animation</span>
       </div>
       <div class="w-arr">↗</div>
-    </a>
+    </div>
 
-    <a href="/works/spinal-care/" class="work-item reveal"
+    <div class="work-item reveal"
       data-pb="linear-gradient(135deg,#0d1f3c,#1e3f6e,#0d1f3c)"
       data-pc="#5bc8e0" data-pl="Chiropractic" data-pn="SPINAL CARE">
       <div class="w-num">004</div>
@@ -721,8 +943,32 @@ footer {
         <span class="w-tag">Form</span>
       </div>
       <div class="w-arr">↗</div>
+    </div>
+
+
+    <a href="/works/mame-cafe/" class="work-item reveal"
+      data-pb="linear-gradient(135deg,#d4956a,#b87348,#8a5230)"
+      data-pc="#faf6ef" data-pl="Café" data-pn="MAME CAFÉ">
+      <div class="w-num">005</div>
+      <div class="w-info">
+        <div class="w-name">MAME CAFÉ</div>
+        <div class="w-cat">カフェ / ナチュラル・温かみ / 20〜30代女性向け</div>
+      </div>
+      <div class="w-tags"><span class="w-tag">HTML/CSS</span><span class="w-tag">Animation</span></div>
+      <div class="w-arr">↗</div>
     </a>
 
+    <a href="/works/form-gym/" class="work-item reveal"
+      data-pb="linear-gradient(135deg,#0e0e0c,#1a1a18,#0e0e0c)"
+      data-pc="#d63a2f" data-pl="Personal Gym" data-pn="FORM.">
+      <div class="w-num">006</div>
+      <div class="w-info">
+        <div class="w-name">FORM. — Personal Gym & Yoga</div>
+        <div class="w-cat">パーソナルジム / モダン・クール / ビジネスパーソン向け</div>
+      </div>
+      <div class="w-tags"><span class="w-tag">HTML/CSS</span><span class="w-tag">Schedule</span></div>
+      <div class="w-arr">↗</div>
+    </a>
   </div>
 </section>
 
@@ -906,6 +1152,20 @@ footer {
 </footer>
 
 <script>
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 // CURSOR
 const cur = document.getElementById('cur');
 let mx=0,my=0;
