@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ファミリーオート — 地域密着の中古車販売店</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;700;800&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #f8f6f1;
+  --white:   #ffffff;
+  --ivory:   #f2ede4;
+  --navy:    #1a2a4a;
+  --navy2:   #132038;
+  --orange:  #e07820;
+  --orange2: #c86810;
+  --ink:     #1e1e1c;
+  --ink2:    #4a4a48;
+  --ink3:    #9a9a96;
+  --rule:    #e0dbd0;
+  --hover:   #f0ebe2;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+#cur {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--orange); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .3s cubic-bezier(.16,1,.3,1), height .3s, background .3s;
+  mix-blend-mode: multiply;
+}
+#cur.on { width: 36px; height: 36px; background: rgba(224,120,32,.1); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3.5rem;
+  background: rgba(248,246,241,.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo { display: flex; align-items: center; gap: .8rem; text-decoration: none; }
+.nav-logo-icon {
+  width: 36px; height: 36px; background: var(--navy);
+  border-radius: 4px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.nav-logo-text { font-family: 'Syne', sans-serif; font-size: .88rem; font-weight: 800; letter-spacing: .12em; color: var(--ink); text-transform: uppercase; }
+.nav-logo-sub { font-family: 'Noto Sans JP', sans-serif; font-size: .58rem; color: var(--ink3); letter-spacing: .08em; display: block; margin-top: -.1rem; }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-links a { font-family: 'Noto Sans JP', sans-serif; font-size: .75rem; letter-spacing: .06em; color: var(--ink3); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-family: 'Noto Sans JP', sans-serif; font-size: .72rem; font-weight: 500; letter-spacing: .06em;
+  color: var(--white); background: var(--orange);
+  text-decoration: none; padding: .55rem 1.5rem; border-radius: 3px; transition: background .2s;
+}
+.nav-cta:hover { background: var(--orange2); }
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-hamburger span { display: block; width: 100%; height: 1.5px; background: var(--ink); transition: transform .3s, opacity .3s; transform-origin: center; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 490; padding: 3rem 1.5rem;
+  opacity: 0; transform: translateY(-8px); transition: opacity .25s, transform .25s; pointer-events: none;
+}
+.mobile-menu.open { opacity: 1; transform: none; pointer-events: all; }
+.mobile-menu ul { list-style: none; }
+.mobile-menu ul li { border-bottom: 1px solid var(--rule); }
+.mobile-menu ul li a { display: block; padding: 1.4rem 0; font-family: 'Noto Sans JP', sans-serif; font-size: 1.4rem; font-weight: 300; color: var(--ink); text-decoration: none; transition: color .2s; }
+.mobile-menu ul li a:hover { color: var(--orange); }
+
+/* HERO */
+.hero {
+  padding-top: 64px;
+  min-height: 100svh;
+  display: grid; grid-template-rows: 1fr auto;
+  border-bottom: 1px solid var(--rule);
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 110% 80%, rgba(224,120,32,.12) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,.02) 59px, rgba(255,255,255,.02) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,.02) 59px, rgba(255,255,255,.02) 60px);
+}
+.hero-main {
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; z-index: 1;
+}
+.hero-left {
+  padding: 6vw 4rem 5rem 3.5rem;
+  border-right: 1px solid rgba(255,255,255,.07);
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: rgba(224,120,32,.15); border: 1px solid rgba(224,120,32,.3);
+  border-radius: 2px; padding: .4rem 1rem; margin-bottom: 2.5rem;
+  font-family: 'DM Mono', monospace; font-size: .54rem; letter-spacing: .22em; text-transform: uppercase; color: var(--orange);
+  opacity: 0; animation: up .8s ease .1s forwards;
+  width: fit-content;
+}
+.hero-badge::before { content:''; width:6px; height:6px; background:var(--orange); border-radius:50%; }
+.hero-h1 {
+  font-family: 'Noto Sans JP', sans-serif; font-weight: 300;
+  font-size: clamp(2.2rem, 4.5vw, 5rem);
+  line-height: 1.4; letter-spacing: .04em; color: var(--white);
+  opacity: 0; animation: up .8s ease .2s forwards;
+}
+.hero-h1 strong { font-weight: 500; display: block; }
+.hero-h1 .accent { color: var(--orange); }
+.hero-tagline {
+  font-size: .84rem; line-height: 2.4; color: rgba(255,255,255,.45);
+  letter-spacing: .06em; margin-top: 2.5rem; max-width: 380px;
+  opacity: 0; animation: up .8s ease .4s forwards;
+}
+.hero-right {
+  padding: 6vw 3.5rem 5rem 4rem;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 1rem;
+  position: relative; z-index: 1;
+  opacity: 0; animation: up .8s ease .5s forwards;
+}
+/* 車のSVGイラスト */
+.car-svg {
+  width: 100%; max-width: 480px; margin: 0 auto 2rem;
+  opacity: .85;
+}
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.06);
+}
+.h-stat { background: rgba(255,255,255,.03); padding: 1.4rem 1.2rem; text-align: center; transition: background .2s; }
+.h-stat:hover { background: rgba(255,255,255,.07); }
+.h-stat-n { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--orange); line-height: 1; letter-spacing: -.01em; }
+.h-stat-l { font-size: .64rem; color: rgba(255,255,255,.35); letter-spacing: .08em; margin-top: .3rem; }
+.hero-bottom {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(255,255,255,.07); position: relative; z-index: 1;
+  opacity: 0; animation: up .7s ease .7s forwards;
+}
+.hero-bl {
+  padding: 1.8rem 3.5rem; border-right: 1px solid rgba(255,255,255,.07);
+  display: flex; align-items: center; gap: 1.2rem;
+}
+.avail-dot { width:7px; height:7px; background:#22c55e; border-radius:50%; flex-shrink:0; animation:pip 2.5s ease infinite; }
+@keyframes pip { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.2)}50%{box-shadow:0 0 0 7px rgba(34,197,94,.05)} }
+.avail-text { font-family:'DM Mono',monospace; font-size:.54rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+.hero-br {
+  padding: 1.8rem 3.5rem; display: flex; align-items: center; justify-content: flex-end; gap: 1rem;
+}
+.btn-orange {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: var(--orange); color: var(--white);
+  font-family: 'Noto Sans JP', sans-serif; font-size: .74rem; font-weight: 500; letter-spacing: .06em;
+  text-decoration: none; padding: .85rem 2rem; border-radius: 3px; transition: background .2s;
+}
+.btn-orange:hover { background: var(--orange2); }
+.btn-ghost-w {
+  display: inline-flex; align-items: center; gap: .6rem;
+  border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.45);
+  font-family: 'Noto Sans JP', sans-serif; font-size: .72rem; letter-spacing: .06em;
+  text-decoration: none; padding: .85rem 1.8rem; border-radius: 3px; transition: border-color .2s, color .2s;
+}
+.btn-ghost-w:hover { border-color: rgba(255,255,255,.4); color: rgba(255,255,255,.85); }
+
+/* TICKER */
+.ticker { overflow: hidden; padding: .85rem 0; background: var(--orange); }
+.ticker-track { display: flex; gap: 4rem; animation: tick 28s linear infinite; white-space: nowrap; }
+.ticker-track span { font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.7); flex-shrink:0; }
+.t-sep { color: rgba(255,255,255,.3) !important; }
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* COMMON */
+.eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .56rem; letter-spacing: .32em; text-transform: uppercase; color: var(--orange);
+  display: flex; align-items: center; gap: .8rem; margin-bottom: 1.8rem;
+}
+.eyebrow::before { content:''; display:block; width:18px; height:1px; background:var(--orange); }
+.big-title { font-family: 'Noto Sans JP', sans-serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; line-height: 1.5; letter-spacing: .04em; color: var(--ink); }
+.big-title strong { font-weight: 500; }
+.reveal { opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity:1; transform:none; }
+@keyframes up { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none} }
+@keyframes fadeI { from{opacity:0}to{opacity:1} }
+
+/* REASON */
+.reason { border-bottom: 1px solid var(--rule); background: var(--white); }
+.reason-header { padding: 5rem 3.5rem 3rem; display: flex; justify-content: space-between; align-items: flex-end; }
+.reason-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.reason-cell {
+  padding: 3rem 2.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  transition: background .2s; position: relative; overflow: hidden;
+}
+.reason-cell::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--orange); transform:scaleX(0); transform-origin:left;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.reason-cell:hover { background: var(--hover); }
+.reason-cell:hover::before { transform:scaleX(1); }
+.rc-num { font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:rgba(26,42,74,.06); line-height:1; margin-bottom:1.5rem; }
+.rc-icon { font-size:1.6rem; margin-bottom:1rem; }
+.rc-title { font-family:'Noto Sans JP',sans-serif; font-weight:500; font-size:.9rem; margin-bottom:.7rem; letter-spacing:.04em; }
+.rc-desc { font-size:.76rem; line-height:2.1; color:var(--ink3); letter-spacing:.04em; }
+
+/* STOCK */
+.stock { border-bottom: 1px solid var(--rule); background: var(--bg); }
+.stock-header { padding: 5rem 3.5rem 3rem; display: flex; justify-content: space-between; align-items: flex-end; }
+.stock-count { font-family:'DM Mono',monospace; font-size:.6rem; letter-spacing:.2em; color:var(--ink3); }
+.stock-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.car-card {
+  background: var(--white); border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  overflow: hidden; transition: box-shadow .25s;
+}
+.car-card:hover { box-shadow: 0 4px 24px rgba(26,42,74,.08); }
+.car-img {
+  height: 180px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.car-img-bg { position:absolute; inset:0; transition:transform .5s cubic-bezier(.16,1,.3,1); }
+.car-card:hover .car-img-bg { transform:scale(1.04); }
+.ci1 { background: linear-gradient(145deg, #c8d8f0 0%, #a0b8d8 100%); }
+.ci2 { background: linear-gradient(145deg, #d8c8a8 0%, #c0a880 100%); }
+.ci3 { background: linear-gradient(145deg, #c8d0c8 0%, #a0b0a0 100%); }
+.ci4 { background: linear-gradient(145deg, #e8d8c8 0%, #d0b898 100%); }
+.ci5 { background: linear-gradient(145deg, #c8c8d8 0%, #a8a8c0 100%); }
+.ci6 { background: linear-gradient(145deg, #d8e8d8 0%, #b0c8b0 100%); }
+.car-img-label {
+  position:relative; z-index:1;
+  font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(26,42,74,.4);
+}
+.car-badge {
+  position:absolute; top:.8rem; left:.8rem; z-index:2;
+  font-family:'DM Mono',monospace; font-size:.48rem; letter-spacing:.15em; text-transform:uppercase;
+  background:var(--navy); color:var(--white); padding:.3rem .7rem; border-radius:2px;
+}
+.car-badge.new { background:var(--orange); }
+.car-body { padding: 1.5rem 1.8rem 2rem; }
+.car-maker { font-family:'DM Mono',monospace; font-size:.52rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink3); margin-bottom:.3rem; }
+.car-name { font-family:'Noto Sans JP',sans-serif; font-weight:500; font-size:1rem; letter-spacing:.04em; margin-bottom:.3rem; }
+.car-spec { font-size:.7rem; color:var(--ink3); letter-spacing:.04em; margin-bottom:1.2rem; display:flex; gap:1rem; flex-wrap:wrap; }
+.car-spec span { display:flex; align-items:center; gap:.3rem; }
+.car-price-row { display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--rule); padding-top:1rem; }
+.car-price { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--navy); letter-spacing:.02em; }
+.car-price small { font-size:.65rem; font-family:'Noto Sans JP',sans-serif; font-weight:300; color:var(--ink3); }
+.car-link { font-family:'DM Mono',monospace; font-size:.52rem; letter-spacing:.15em; text-transform:uppercase; color:var(--orange); text-decoration:none; transition:opacity .2s; }
+.car-link:hover { opacity:.7; }
+.stock-more {
+  grid-column: span 3; padding: 2rem 3.5rem;
+  display: flex; align-items: center; justify-content: center;
+  border-top: none;
+}
+.btn-more {
+  display: inline-flex; align-items: center; gap: .7rem;
+  border: 1px solid var(--rule); color: var(--ink2);
+  font-family: 'Noto Sans JP', sans-serif; font-size: .76rem; letter-spacing: .06em;
+  text-decoration: none; padding: .9rem 2.5rem; border-radius: 3px; background: var(--white);
+  transition: border-color .2s, background .2s;
+}
+.btn-more:hover { border-color: var(--navy); background: var(--hover); }
+
+/* FLOW */
+.flow { border-bottom: 1px solid var(--rule); background: var(--navy); padding: 6rem 3.5rem; }
+.flow-header { margin-bottom: 3.5rem; }
+.flow-eyebrow { font-family:'DM Mono',monospace; font-size:.56rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(255,255,255,.3); display:flex; align-items:center; gap:.8rem; margin-bottom:1.8rem; }
+.flow-eyebrow::before { content:''; display:block; width:18px; height:1px; background:var(--orange); }
+.flow-title { font-family:'Noto Sans JP',sans-serif; font-weight:300; font-size:clamp(1.8rem,3vw,2.8rem); color:var(--white); letter-spacing:.04em; }
+.flow-steps {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  gap: 0; position: relative;
+}
+.flow-steps::before {
+  content:''; position:absolute; top:28px; left:10%; right:10%; height:1px;
+  background: rgba(255,255,255,.1); z-index: 0;
+}
+.flow-step { padding: 0 1rem; text-align: center; position: relative; z-index: 1; }
+.fs-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin: 0 auto 1.2rem;
+  transition: background .2s, border-color .2s;
+}
+.flow-step:hover .fs-circle { background:rgba(224,120,32,.15); border-color:rgba(224,120,32,.4); }
+.fs-num { font-family:'DM Mono',monospace; font-size:.52rem; letter-spacing:.2em; color:rgba(255,255,255,.25); margin-bottom:.5rem; }
+.fs-title { font-size:.82rem; font-weight:500; color:var(--white); letter-spacing:.04em; margin-bottom:.5rem; }
+.fs-desc { font-size:.68rem; line-height:1.9; color:rgba(255,255,255,.35); letter-spacing:.04em; }
+
+/* VOICE */
+.voice { border-bottom: 1px solid var(--rule); background: var(--ivory); }
+.voice-header { padding: 5rem 3.5rem 3rem; }
+.voice-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.voice-card {
+  padding: 2.8rem 2.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  background: var(--white); transition: background .2s;
+}
+.voice-card:hover { background: var(--hover); }
+.voice-stars { display:flex; gap:.2rem; margin-bottom:1.2rem; }
+.v-star { color:var(--orange); font-size:.75rem; }
+.voice-text { font-size:.8rem; line-height:2.3; color:var(--ink2); letter-spacing:.04em; margin-bottom:1.5rem; font-style:italic; }
+.voice-meta { display:flex; align-items:center; gap:.8rem; }
+.voice-avatar { width:32px; height:32px; border-radius:50%; background:var(--navy); display:flex; align-items:center; justify-content:center; font-size:.8rem; }
+.voice-name { font-size:.72rem; color:var(--ink3); letter-spacing:.04em; }
+.voice-car { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.15em; text-transform:uppercase; color:var(--orange); }
+
+/* ABOUT */
+.about {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rule); background: var(--white);
+}
+.about-left {
+  padding: 7rem 4rem 7rem 3.5rem; border-right: 1px solid var(--rule);
+}
+.about-shop-img {
+  width:100%; aspect-ratio:4/3; background:var(--navy); border-radius:4px; overflow:hidden;
+  position:relative; display:flex; align-items:center; justify-content:center; margin-bottom:2rem;
+}
+.about-shop-bg { position:absolute; inset:0; background:linear-gradient(145deg, #1a2a4a 0%, #0e1830 100%); }
+.about-shop-text {
+  position:relative; z-index:1; text-align:center;
+  font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; font-style:italic;
+  color:rgba(255,255,255,.06); letter-spacing:.1em;
+}
+.about-shop-badge {
+  position:absolute; bottom:1rem; right:1rem; z-index:2;
+  background:var(--orange); color:var(--white);
+  font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.15em;
+  padding:.35rem .85rem; border-radius:2px;
+}
+.about-info-list { list-style:none; }
+.about-info-item {
+  display:grid; grid-template-columns:80px 1fr; gap:1rem; padding:1rem 0;
+  border-bottom:1px solid var(--rule); font-size:.78rem; letter-spacing:.04em;
+}
+.ai-key { color:var(--ink3); }
+.ai-val { color:var(--ink2); line-height:1.8; }
+.about-right {
+  padding: 7rem 3.5rem 7rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.about-lead { font-family:'Noto Sans JP',sans-serif; font-weight:300; font-size:clamp(1.4rem,2.5vw,2.2rem); line-height:1.8; letter-spacing:.04em; color:var(--ink); margin-bottom:2.5rem; }
+.about-lead strong { font-weight:500; color:var(--navy); }
+.about-body { font-size:.84rem; line-height:2.5; color:var(--ink2); letter-spacing:.04em; margin-bottom:1.5rem; }
+.kpi-row {
+  display:grid; grid-template-columns:repeat(3,1fr); margin-top:3rem;
+  border-top:1px solid var(--rule); border-left:1px solid var(--rule);
+}
+.kpi { padding:1.8rem 1.5rem; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); transition:background .2s; }
+.kpi:hover { background:var(--hover); }
+.kpi-n { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:300; line-height:1; color:var(--navy); margin-bottom:.4rem; letter-spacing:-.01em; }
+.kpi-l { font-size:.62rem; color:var(--ink3); letter-spacing:.06em; }
+
+/* CTA */
+.cta-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+.cta-left {
+  padding: 7rem 4rem 7rem 3.5rem; border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--bg);
+}
+.cta-eyebrow { font-family:'DM Mono',monospace; font-size:.56rem; letter-spacing:.28em; text-transform:uppercase; color:var(--orange); display:flex; align-items:center; gap:.8rem; margin-bottom:2rem; }
+.cta-eyebrow::before { content:''; display:block; width:18px; height:1px; background:var(--orange); }
+.cta-h { font-family:'Noto Sans JP',sans-serif; font-weight:300; font-size:clamp(1.8rem,3.5vw,3rem); line-height:1.6; letter-spacing:.04em; color:var(--ink); margin-bottom:1.5rem; }
+.cta-h strong { font-weight:500; color:var(--navy); display:block; }
+.cta-sub { font-size:.82rem; line-height:2.3; color:var(--ink3); letter-spacing:.04em; }
+.cta-right {
+  padding: 7rem 3.5rem 7rem 4rem; background: var(--navy);
+  display: flex; flex-direction: column; justify-content: center; gap: 1.2rem;
+}
+.btn-cta-orange { display:block; text-align:center; text-decoration:none; font-family:'Noto Sans JP',sans-serif; font-size:.82rem; font-weight:500; letter-spacing:.06em; background:var(--orange); color:var(--white); padding:1.2rem; border-radius:3px; transition:background .2s; }
+.btn-cta-orange:hover { background:var(--orange2); }
+.btn-cta-ghost { display:block; text-align:center; text-decoration:none; font-family:'Noto Sans JP',sans-serif; font-size:.82rem; letter-spacing:.06em; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.5); padding:1.2rem; border-radius:3px; transition:border-color .2s, color .2s; }
+.btn-cta-ghost:hover { border-color:rgba(255,255,255,.4); color:var(--white); }
+.cta-tel { text-align:center; }
+.cta-tel-num { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; color:var(--white); letter-spacing:.06em; display:block; }
+.cta-tel-label { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-top:.3rem; display:block; }
+
+/* FOOTER */
+footer { background:var(--navy); border-top:1px solid rgba(255,255,255,.07); }
+.footer-top {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  padding:4rem 3.5rem; gap:3rem; border-bottom:1px solid rgba(255,255,255,.07);
+}
+.foot-brand {}
+.foot-logo-w { display:flex; align-items:center; gap:.7rem; margin-bottom:1rem; }
+.foot-logo-icon { width:32px; height:32px; background:var(--orange); border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+.foot-logo-name { font-family:'Syne',sans-serif; font-size:.85rem; font-weight:800; letter-spacing:.15em; color:var(--white); text-transform:uppercase; }
+.foot-copy { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.14em; color:rgba(255,255,255,.2); margin-top:1rem; }
+.foot-label { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:1.2rem; }
+.foot-links { list-style:none; display:flex; flex-direction:column; gap:.7rem; }
+.foot-links a { font-size:.76rem; color:rgba(255,255,255,.45); text-decoration:none; letter-spacing:.04em; transition:color .2s; }
+.foot-links a:hover { color:rgba(255,255,255,.85); }
+.footer-bottom {
+  padding:1.5rem 3.5rem; display:flex; justify-content:space-between; align-items:center;
+}
+.footer-bottom p { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.14em; color:rgba(255,255,255,.18); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  nav { padding: 0 2rem; }
+  .nav-links { gap: 1.5rem; }
+  .hero-main { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 5rem 2rem 3rem; }
+  .hero-right { padding: 3rem 2rem 3rem; }
+  .hero-h1 { font-size: clamp(2rem,8vw,4rem); }
+  .hero-stats { grid-template-columns: repeat(3,1fr); }
+  .hero-bottom { grid-template-columns: 1fr; }
+  .hero-bl { border-right:none; border-bottom:1px solid rgba(255,255,255,.07); padding:1.5rem 2rem; }
+  .hero-br { padding:1.5rem 2rem; justify-content:flex-start; }
+  .reason-grid { grid-template-columns: repeat(2,1fr); }
+  .stock-grid { grid-template-columns: repeat(2,1fr); }
+  .stock-more { grid-column: span 2; }
+  .flow { padding: 5rem 2rem; }
+  .flow-steps { grid-template-columns: repeat(3,1fr); gap: 2rem; }
+  .flow-steps::before { display:none; }
+  .voice-grid { grid-template-columns: repeat(2,1fr); }
+  .about { grid-template-columns: 1fr; }
+  .about-left { border-right:none; border-bottom:1px solid var(--rule); padding:4rem 2rem 3rem; }
+  .about-right { padding:3rem 2rem 4rem; }
+  .cta-section { grid-template-columns: 1fr; }
+  .cta-left { border-right:none; border-bottom:1px solid var(--rule); padding:4rem 2rem 3rem; }
+  .cta-right { padding:3rem 2rem 4rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap:2rem; padding:3rem 2rem; }
+  .footer-bottom { padding:1.5rem 2rem; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; height: 56px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: block; top: 56px; }
+  .hero { padding-top: 56px; }
+  .hero-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .hero-h1 { font-size: clamp(1.8rem,9vw,3rem); }
+  .hero-right { padding: 2.5rem 1.5rem; }
+  .hero-bl, .hero-br { padding: 1.2rem 1.5rem; }
+  .hero-br { flex-direction: column; align-items: flex-start; gap: .8rem; }
+  .reason-header { padding: 3.5rem 1.5rem 2rem; flex-direction:column; gap:1rem; align-items:flex-start; }
+  .reason-grid { grid-template-columns: 1fr; }
+  .stock-header { padding: 3.5rem 1.5rem 2rem; flex-direction:column; gap:1rem; align-items:flex-start; }
+  .stock-grid { grid-template-columns: 1fr; }
+  .stock-more { grid-column: span 1; padding: 2rem 1.5rem; }
+  .flow { padding: 4rem 1.5rem; }
+  .flow-steps { grid-template-columns: 1fr 1fr; }
+  .voice-header { padding: 3.5rem 1.5rem 2rem; }
+  .voice-grid { grid-template-columns: 1fr; }
+  .about-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .about-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .cta-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .cta-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; padding:2.5rem 1.5rem; }
+  .footer-bottom { padding:1.2rem 1.5rem; flex-direction:column; gap:.5rem; text-align:center; }
+}
+@media (max-width: 480px) {
+  .hero-h1 { font-size: clamp(1.6rem,10vw,2.5rem); }
+  .hero-stats { grid-template-columns: repeat(3,1fr); }
+  .reason-grid { grid-template-columns: 1fr; }
+  .reason-cell { padding: 2.5rem 1.8rem; }
+  .flow-steps { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: repeat(3,1fr); }
+  .footer-top { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { padding: 3rem 1.5rem; }
+  .reason-header { padding: 3.5rem 1.5rem 2rem; }
+  .stock-header { padding: 3.5rem 1.5rem 2rem; }
+  .flow { padding: 4rem 1.5rem; }
+  .voice-header { padding: 3.5rem 1.5rem 2rem; }
+  .about-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .about-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .cta-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .cta-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .footer-top { padding: 2.5rem 1.5rem; }
+  .footer-bottom { padding: 1.2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">🚗</div>
+    <div>
+      <span class="nav-logo-text">Family Auto</span>
+      <span class="nav-logo-sub">地域密着の中古車販売</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#stock">在庫車両</a></li>
+    <li><a href="#flow">購入の流れ</a></li>
+    <li><a href="#about">お店について</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">無料相談</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="#stock" onclick="closeMenu()">在庫車両</a></li>
+    <li><a href="#flow" onclick="closeMenu()">購入の流れ</a></li>
+    <li><a href="#about" onclick="closeMenu()">お店について</a></li>
+    <li><a href="#contact" onclick="closeMenu()">お問い合わせ</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-main">
+    <div class="hero-left">
+      <div class="hero-badge">新入庫 毎週更新中</div>
+      <h1 class="hero-h1">
+        家族に寄り添う、<br>
+        <strong>正直な<span class="accent">クルマ選び</span>を。</strong>
+      </h1>
+      <p class="hero-tagline">
+        創業20年、地域に根ざした中古車専門店。<br>
+        「安くていい車に乗ってほしい」という<br>
+        シンプルな想いで、今日も店を開けています。
+      </p>
+    </div>
+    <div class="hero-right">
+      <!-- 車のSVGイラスト -->
+      <svg class="car-svg" viewBox="0 0 480 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="100" width="360" height="70" rx="8" fill="rgba(255,255,255,.06)"/>
+        <path d="M100 100 L140 60 L340 60 L380 100Z" fill="rgba(255,255,255,.08)"/>
+        <rect x="150" y="65" width="80" height="32" rx="3" fill="rgba(255,255,255,.05)"/>
+        <rect x="250" y="65" width="75" height="32" rx="3" fill="rgba(255,255,255,.05)"/>
+        <circle cx="140" cy="172" r="26" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+        <circle cx="140" cy="172" r="14" fill="rgba(255,255,255,.05)"/>
+        <circle cx="340" cy="172" r="26" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+        <circle cx="340" cy="172" r="14" fill="rgba(255,255,255,.05)"/>
+        <rect x="62" y="128" width="40" height="18" rx="2" fill="rgba(224,120,32,.3)"/>
+        <rect x="378" y="128" width="40" height="18" rx="2" fill="rgba(224,120,32,.2)"/>
+      </svg>
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="h-stat-n">200+</div>
+          <div class="h-stat-l">在庫台数</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-n">20年</div>
+          <div class="h-stat-l">創業年数</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-n">4.8</div>
+          <div class="h-stat-l">口コミ評価</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-bl">
+      <div class="avail-dot"></div>
+      <span class="avail-text">本日営業中 — 10:00〜19:00</span>
+    </div>
+    <div class="hero-br">
+      <a href="#stock" class="btn-ghost-w">在庫を見る ↓</a>
+      <a href="#contact" class="btn-orange">無料相談はこちら →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>総在庫200台以上</span><span class="t-sep">/</span>
+    <span>全車整備済み</span><span class="t-sep">/</span>
+    <span>保証付き販売</span><span class="t-sep">/</span>
+    <span>ローン対応</span><span class="t-sep">/</span>
+    <span>下取り査定無料</span><span class="t-sep">/</span>
+    <span>創業20年の実績</span><span class="t-sep">/</span>
+    <span>総在庫200台以上</span><span class="t-sep">/</span>
+    <span>全車整備済み</span><span class="t-sep">/</span>
+    <span>保証付き販売</span><span class="t-sep">/</span>
+    <span>ローン対応</span><span class="t-sep">/</span>
+    <span>下取り査定無料</span><span class="t-sep">/</span>
+    <span>創業20年の実績</span><span class="t-sep">/</span>
+  </div>
+</div>
+
+<!-- REASON -->
+<section class="reason">
+  <div class="reason-header reveal">
+    <div>
+      <div class="eyebrow">Why Family Auto</div>
+      <h2 class="big-title">選ばれる<strong>4つの理由</strong></h2>
+    </div>
+  </div>
+  <div class="reason-grid">
+    <div class="reason-cell reveal">
+      <div class="rc-num">01</div>
+      <div class="rc-icon">🔧</div>
+      <div class="rc-title">全車整備・保証付き</div>
+      <p class="rc-desc">販売前に自社整備工場で徹底点検。最低1年間の走行保証付きで安心してお乗りいただけます。</p>
+    </div>
+    <div class="reason-cell reveal">
+      <div class="rc-num">02</div>
+      <div class="rc-icon">💰</div>
+      <div class="rc-title">明朗会計・諸費用込み</div>
+      <p class="rc-desc">表示価格に諸費用を含めた「総額表示」を徹底。後から追加費用が発生しない透明な価格設定です。</p>
+    </div>
+    <div class="reason-cell reveal">
+      <div class="rc-num">03</div>
+      <div class="rc-icon">📋</div>
+      <div class="rc-title">ローン・下取り対応</div>
+      <p class="rc-desc">最低金利1.9%〜のオートローンに対応。今お乗りの車の下取り査定も無料で行っています。</p>
+    </div>
+    <div class="reason-cell reveal">
+      <div class="rc-num">04</div>
+      <div class="rc-icon">🤝</div>
+      <div class="rc-title">購入後もサポート</div>
+      <p class="rc-desc">オイル交換・車検・修理まで購入後も一貫してサポート。長いお付き合いができるお店を目指しています。</p>
+    </div>
+  </div>
+</section>
+
+<!-- STOCK -->
+<section class="stock" id="stock">
+  <div class="stock-header reveal">
+    <div>
+      <div class="eyebrow">Stock</div>
+      <h2 class="big-title">在庫<strong>車両</strong></h2>
+    </div>
+    <span class="stock-count">現在 200台以上 在庫</span>
+  </div>
+  <div class="stock-grid">
+    <div class="car-card reveal">
+      <div class="car-img">
+        <div class="car-img-bg ci1"></div>
+        <div class="car-badge new">新入庫</div>
+        <span class="car-img-label">Toyota</span>
+      </div>
+      <div class="car-body">
+        <div class="car-maker">Toyota</div>
+        <div class="car-name">プリウス G</div>
+        <div class="car-spec">
+          <span>🗓 2020年</span><span>📏 2.8万km</span><span>⚙️ CVT</span>
+        </div>
+        <div class="car-price-row">
+          <div class="car-price">¥198<small>万円（総額）</small></div>
+          <a href="#contact" class="car-link">詳細 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="car-card reveal">
+      <div class="car-img">
+        <div class="car-img-bg ci2"></div>
+        <div class="car-badge">おすすめ</div>
+        <span class="car-img-label">Honda</span>
+      </div>
+      <div class="car-body">
+        <div class="car-maker">Honda</div>
+        <div class="car-name">フリード+ ハイブリッド</div>
+        <div class="car-spec">
+          <span>🗓 2019年</span><span>📏 4.1万km</span><span>⚙️ CVT</span>
+        </div>
+        <div class="car-price-row">
+          <div class="car-price">¥168<small>万円（総額）</small></div>
+          <a href="#contact" class="car-link">詳細 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="car-card reveal">
+      <div class="car-img">
+        <div class="car-img-bg ci3"></div>
+        <div class="car-badge">家族向け</div>
+        <span class="car-img-label">Toyota</span>
+      </div>
+      <div class="car-body">
+        <div class="car-maker">Toyota</div>
+        <div class="car-name">シエンタ 7人乗り</div>
+        <div class="car-spec">
+          <span>🗓 2021年</span><span>📏 1.9万km</span><span>⚙️ CVT</span>
+        </div>
+        <div class="car-price-row">
+          <div class="car-price">¥218<small>万円（総額）</small></div>
+          <a href="#contact" class="car-link">詳細 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="car-card reveal">
+      <div class="car-img">
+        <div class="car-img-bg ci4"></div>
+        <span class="car-img-label">Daihatsu</span>
+      </div>
+      <div class="car-body">
+        <div class="car-maker">Daihatsu</div>
+        <div class="car-name">タント カスタム</div>
+        <div class="car-spec">
+          <span>🗓 2022年</span><span>📏 0.8万km</span><span>⚙️ CVT</span>
+        </div>
+        <div class="car-price-row">
+          <div class="car-price">¥148<small>万円（総額）</small></div>
+          <a href="#contact" class="car-link">詳細 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="car-card reveal">
+      <div class="car-img">
+        <div class="car-img-bg ci5"></div>
+        <div class="car-badge new">新入庫</div>
+        <span class="car-img-label">Nissan</span>
+      </div>
+      <div class="car-body">
+        <div class="car-maker">Nissan</div>
+        <div class="car-name">セレナ e-POWER</div>
+        <div class="car-spec">
+          <span>🗓 2020年</span><span>📏 3.5万km</span><span>⚙️ CVT</span>
+        </div>
+        <div class="car-price-row">
+          <div class="car-price">¥248<small>万円（総額）</small></div>
+          <a href="#contact" class="car-link">詳細 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="car-card reveal">
+      <div class="car-img">
+        <div class="car-img-bg ci6"></div>
+        <span class="car-img-label">Suzuki</span>
+      </div>
+      <div class="car-body">
+        <div class="car-maker">Suzuki</div>
+        <div class="car-name">スペーシア ギア</div>
+        <div class="car-spec">
+          <span>🗓 2021年</span><span>📏 2.2万km</span><span>⚙️ CVT</span>
+        </div>
+        <div class="car-price-row">
+          <div class="car-price">¥128<small>万円（総額）</small></div>
+          <a href="#contact" class="car-link">詳細 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="stock-more reveal">
+      <a href="#contact" class="btn-more">在庫をすべて見る（200台以上）→</a>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow" id="flow">
+  <div class="flow-header reveal">
+    <div class="flow-eyebrow">Purchase Flow</div>
+    <h2 class="flow-title">はじめての方も<strong style="color:var(--orange)">安心</strong>の購入ステップ</h2>
+  </div>
+  <div class="flow-steps reveal">
+    <div class="flow-step">
+      <div class="fs-circle">💬</div>
+      <div class="fs-num">Step 01</div>
+      <div class="fs-title">ご相談</div>
+      <p class="fs-desc">来店・電話・LINEでご相談。予算・用途・ご希望をお聞きします。</p>
+    </div>
+    <div class="flow-step">
+      <div class="fs-circle">🔍</div>
+      <div class="fs-num">Step 02</div>
+      <div class="fs-title">車両選び</div>
+      <p class="fs-desc">在庫から最適な車をご提案。試乗も随時受付中です。</p>
+    </div>
+    <div class="flow-step">
+      <div class="fs-circle">📝</div>
+      <div class="fs-num">Step 03</div>
+      <div class="fs-title">お見積もり</div>
+      <p class="fs-desc">総額でのお見積もりを提示。ローンシミュレーションも対応。</p>
+    </div>
+    <div class="flow-step">
+      <div class="fs-circle">✅</div>
+      <div class="fs-num">Step 04</div>
+      <div class="fs-title">ご成約</div>
+      <p class="fs-desc">ご契約後に納車整備・車検・登録手続きを行います。</p>
+    </div>
+    <div class="flow-step">
+      <div class="fs-circle">🚗</div>
+      <div class="fs-num">Step 05</div>
+      <div class="fs-title">納車</div>
+      <p class="fs-desc">ご自宅への納車も対応。操作説明を丁寧に行います。</p>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section class="voice">
+  <div class="voice-header reveal">
+    <div class="eyebrow">Customer Voice</div>
+    <h2 class="big-title">お客様の<strong>声</strong></h2>
+  </div>
+  <div class="voice-grid">
+    <div class="voice-card reveal">
+      <div class="voice-stars">★★★★★</div>
+      <p class="voice-text">「押し売りが全くなく、こちらの予算と希望をしっかり聞いてくれました。購入後のアフターも丁寧で、本当に信頼できるお店です。」</p>
+      <div class="voice-meta">
+        <div class="voice-avatar">👩</div>
+        <div>
+          <div class="voice-name">M.T 様 — 30代女性</div>
+          <div class="voice-car">Toyota Sienta 購入</div>
+        </div>
+      </div>
+    </div>
+    <div class="voice-card reveal">
+      <div class="voice-stars">★★★★★</div>
+      <p class="voice-text">「総額表示で追加費用がなかったのが助かりました。子供が3人いるので予算内で7人乗りを探していて、ぴったりの一台を見つけてもらえました。」</p>
+      <div class="voice-meta">
+        <div class="voice-avatar">👨</div>
+        <div>
+          <div class="voice-name">K.S 様 — 40代男性</div>
+          <div class="voice-car">Honda Freed 購入</div>
+        </div>
+      </div>
+    </div>
+    <div class="voice-card reveal">
+      <div class="voice-stars">★★★★★</div>
+      <p class="voice-text">「初めての車購入で不安でしたが、一から丁寧に説明してくれて安心して購入できました。納車後のオイル交換も近所でできて便利です。」</p>
+      <div class="voice-meta">
+        <div class="voice-avatar">👩</div>
+        <div>
+          <div class="voice-name">A.Y 様 — 20代女性</div>
+          <div class="voice-car">Daihatsu Tanto 購入</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <div class="about-shop-img">
+      <div class="about-shop-bg"></div>
+      <div class="about-shop-text">Family Auto</div>
+      <div class="about-shop-badge">Since 2004</div>
+    </div>
+    <ul class="about-info-list">
+      <li class="about-info-item"><span class="ai-key">店名</span><span class="ai-val">ファミリーオート</span></li>
+      <li class="about-info-item"><span class="ai-key">住所</span><span class="ai-val">〒XXX-XXXX 埼玉県XX市XX X-X-X</span></li>
+      <li class="about-info-item"><span class="ai-key">営業時間</span><span class="ai-val">10:00〜19:00（定休日：毎週水曜日）</span></li>
+      <li class="about-info-item"><span class="ai-key">電話</span><span class="ai-val">048-XXX-XXXX</span></li>
+      <li class="about-info-item"><span class="ai-key">古物商許可</span><span class="ai-val">埼玉県公安委員会 第XXXXXXXX号</span></li>
+    </ul>
+  </div>
+  <div class="about-right reveal">
+    <div class="eyebrow">About Us</div>
+    <p class="about-lead">地域の皆さんに、<br><strong>「また来たい」と思ってもらえる</strong><br>お店でありたい。</p>
+    <p class="about-body">2004年の創業以来、埼玉県を中心に地域密着で中古車販売を行ってきました。「車のことはよくわからないから不安」というお客様のために、専門用語を使わない丁寧な説明を心がけています。</p>
+    <p class="about-body">スタッフ全員が「もし自分の家族が買うなら」という視点でご案内しています。高い車を売ることより、長くお付き合いできる関係を大切にしています。</p>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">20年</div><div class="kpi-l">創業年数</div></div>
+      <div class="kpi"><div class="kpi-n">2,000+</div><div class="kpi-l">累計販売台数</div></div>
+      <div class="kpi"><div class="kpi-n">4.8★</div><div class="kpi-l">Google評価</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-left reveal">
+    <div class="cta-eyebrow">Contact</div>
+    <h2 class="cta-h">まずはお気軽に<br><strong>ご相談ください。</strong></h2>
+    <p class="cta-sub">予算・車種・ローンなど、どんな些細なことでもお気軽にご相談ください。来店・電話・LINEから受け付けています。</p>
+  </div>
+  <div class="cta-right reveal">
+    <a href="tel:048-XXX-XXXX" class="cta-tel">
+      <span class="cta-tel-num">📞 048-XXX-XXXX</span>
+      <span class="cta-tel-label">営業時間：10:00〜19:00（水曜定休）</span>
+    </a>
+    <a href="#" class="btn-cta-orange">LINEで相談する →</a>
+    <a href="#" class="btn-cta-ghost">来店予約をする</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="foot-brand">
+      <div class="foot-logo-w">
+        <div class="foot-logo-icon">🚗</div>
+        <div class="foot-logo-name">Family Auto</div>
+      </div>
+      <p style="font-size:.76rem;line-height:2;color:rgba(255,255,255,.35);letter-spacing:.04em;max-width:280px;">埼玉県XXで20年。地域の皆さまに信頼される中古車販売店を目指しています。</p>
+      <p class="foot-copy">© 2024 Family Auto. All rights reserved.</p>
+    </div>
+    <div>
+      <div class="foot-label">Navigation</div>
+      <ul class="foot-links">
+        <li><a href="#stock">在庫車両</a></li>
+        <li><a href="#flow">購入の流れ</a></li>
+        <li><a href="#about">お店について</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-label">Services</div>
+      <ul class="foot-links">
+        <li><a href="#">中古車販売</a></li>
+        <li><a href="#">下取り・買取</a></li>
+        <li><a href="#">車検・整備</a></li>
+        <li><a href="#">ローン相談</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-label">Info</div>
+      <ul class="foot-links">
+        <li><a href="#">営業：10:00〜19:00</a></li>
+        <li><a href="#">定休日：毎週水曜日</a></li>
+        <li><a href="#">048-XXX-XXXX</a></li>
+        <li><a href="#">Google マップ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Family Auto — 埼玉県XX市 古物商許可 埼玉県公安委員会 第XXXXXXXX号</p>
+    <p>プライバシーポリシー ｜ 特定商取引法</p>
+  </div>
+</footer>
+
+<script>
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .reason-cell, .car-card, .voice-card, .kpi, .flow-step, .h-stat').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('on'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('on'));
+});
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((en, i) => {
+    if (en.isIntersecting) setTimeout(() => en.target.classList.add('in'), i * 60);
+  });
+}, { threshold: .07 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

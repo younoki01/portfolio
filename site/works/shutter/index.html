@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHUTTER — Commercial Photographer / Tokyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;700;800&family=Noto+Sans+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #f7f7f5;
+  --white:  #ffffff;
+  --ink:    #0c0c0a;
+  --ink2:   #3c3c3a;
+  --ink3:   #8c8c8a;
+  --rule:   #e0e0dc;
+  --hover:  #f0f0ee;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+#cur {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--ink); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .3s cubic-bezier(.16,1,.3,1), height .3s, background .3s;
+  mix-blend-mode: multiply;
+}
+#cur.on { width: 40px; height: 40px; background: rgba(12,12,10,.07); }
+#cur.photo { width: 64px; height: 64px; background: transparent; border: 1px solid rgba(12,12,10,.2); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3.5rem;
+  background: rgba(247,247,245,.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif; font-size: .85rem; font-weight: 800;
+  letter-spacing: .22em; color: var(--ink); text-decoration: none; text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: 'DM Mono', monospace; font-size: .58rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink3); text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-family: 'DM Mono', monospace; font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--white); background: var(--ink);
+  text-decoration: none; padding: .52rem 1.4rem; border-radius: 2px;
+  transition: opacity .2s;
+}
+.nav-cta:hover { opacity: .75; }
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-hamburger span { display: block; width: 100%; height: 1.5px; background: var(--ink); transition: transform .3s, opacity .3s; transform-origin: center; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 490; padding: 3rem 1.5rem;
+  opacity: 0; transform: translateY(-8px); transition: opacity .25s, transform .25s; pointer-events: none;
+}
+.mobile-menu.open { opacity: 1; transform: none; pointer-events: all; }
+.mobile-menu ul { list-style: none; }
+.mobile-menu ul li { border-bottom: 1px solid var(--rule); }
+.mobile-menu ul li a {
+  display: block; padding: 1.4rem 0;
+  font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
+  color: var(--ink); text-decoration: none; letter-spacing: .04em; transition: opacity .2s;
+}
+.mobile-menu ul li a:hover { opacity: .5; }
+
+/* HERO */
+.hero {
+  padding-top: 60px;
+  min-height: 100svh;
+  display: grid; grid-template-rows: 1fr auto;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ink);
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(255,255,255,.03) 0%, transparent 70%),
+    repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,.02) 79px, rgba(255,255,255,.02) 80px),
+    repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,.02) 79px, rgba(255,255,255,.02) 80px);
+  pointer-events: none;
+}
+.hero-main {
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; z-index: 1;
+  min-height: calc(100svh - 60px - 64px);
+}
+.hero-left {
+  padding: 6vw 4rem 5rem 3.5rem;
+  border-right: 1px solid rgba(255,255,255,.07);
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .56rem;
+  letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.3);
+  display: flex; align-items: center; gap: .8rem; margin-bottom: 3rem;
+  opacity: 0; animation: up .8s ease .1s forwards;
+}
+.hero-eyebrow::before { content:''; display:block; width:20px; height:1px; background:rgba(255,255,255,.3); }
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4.5rem, 8.5vw, 10rem);
+  font-weight: 300; line-height: .92; letter-spacing: -.02em; color: var(--white);
+  opacity: 0; animation: up .8s ease .2s forwards;
+}
+.hero-h1 em { font-style: italic; color: rgba(255,255,255,.35); display: block; }
+.hero-tagline {
+  font-size: .82rem; line-height: 2.3; color: rgba(255,255,255,.4);
+  letter-spacing: .06em; margin-top: 3rem; max-width: 360px;
+  opacity: 0; animation: up .8s ease .4s forwards;
+}
+.hero-right {
+  padding: 6vw 3.5rem 5rem 4rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; z-index: 1;
+}
+.hero-index {
+  font-family: 'DM Mono', monospace; font-size: .55rem;
+  letter-spacing: .25em; color: rgba(255,255,255,.18);
+  opacity: 0; animation: fadeI .8s ease .3s forwards;
+}
+/* モックフォトグリッド */
+.hero-photo-grid {
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  gap: 8px; flex: 1; margin-top: 2rem;
+  opacity: 0; animation: up .8s ease .5s forwards;
+}
+.photo-mock {
+  border-radius: 3px; overflow: hidden; position: relative;
+  display: flex; align-items: flex-end; padding: .8rem;
+  transition: opacity .3s;
+}
+.photo-mock:hover { opacity: .8; }
+.photo-mock.tall { grid-row: span 2; }
+.pm-bg { position: absolute; inset: 0; }
+.pm1 { background: linear-gradient(145deg, #2a2a28 0%, #1a1a18 100%); }
+.pm2 { background: linear-gradient(145deg, #3a3530 0%, #252018 100%); }
+.pm3 { background: linear-gradient(145deg, #1e2428 0%, #141820 100%); }
+.pm4 { background: linear-gradient(145deg, #2e2a26 0%, #1e1a16 100%); }
+.pm-label {
+  position: relative; z-index: 1;
+  font-family: 'DM Mono', monospace; font-size: .48rem;
+  letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.3);
+}
+/* 写真内のシルエット風装飾 */
+.pm-figure {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300;
+  color: rgba(255,255,255,.04); letter-spacing: .2em;
+}
+.hero-bottom {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(255,255,255,.07);
+  position: relative; z-index: 1;
+}
+.hero-bl {
+  padding: 1.8rem 3.5rem; border-right: 1px solid rgba(255,255,255,.07);
+  display: flex; align-items: center; gap: 1.2rem;
+  opacity: 0; animation: up .7s ease .7s forwards;
+}
+.avail-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; flex-shrink:0; animation: pip 2.5s ease infinite; }
+@keyframes pip { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.2)}50%{box-shadow:0 0 0 7px rgba(34,197,94,.05)} }
+.avail-text { font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.28); }
+.hero-br {
+  padding: 1.8rem 3.5rem; display: flex; align-items: center; justify-content: flex-end; gap: 1rem;
+  opacity: 0; animation: up .7s ease .8s forwards;
+}
+.btn-w {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: var(--white); color: var(--ink);
+  font-family: 'DM Mono', monospace; font-size: .6rem; letter-spacing: .18em; text-transform: uppercase;
+  text-decoration: none; padding: .82rem 2rem; border-radius: 2px; transition: opacity .2s;
+}
+.btn-w:hover { opacity: .85; }
+.btn-ghost-w {
+  display: inline-flex; align-items: center; gap: .6rem;
+  border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.4);
+  font-family: 'DM Mono', monospace; font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
+  text-decoration: none; padding: .82rem 1.8rem; border-radius: 2px; transition: border-color .2s, color .2s;
+}
+.btn-ghost-w:hover { border-color: rgba(255,255,255,.4); color: rgba(255,255,255,.8); }
+
+/* TICKER */
+.ticker { overflow: hidden; padding: .85rem 0; background: var(--white); border-bottom: 1px solid var(--rule); }
+.ticker-track { display: flex; gap: 4rem; animation: tick 28s linear infinite; white-space: nowrap; }
+.ticker-track span { font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink3); flex-shrink:0; }
+.t-sep { color: var(--rule) !important; }
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* COMMON */
+.eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .56rem; letter-spacing: .32em; text-transform: uppercase; color: var(--ink3);
+  display: flex; align-items: center; gap: .8rem; margin-bottom: 2rem;
+}
+.eyebrow::before { content:''; display:block; width:18px; height:1px; background:var(--ink3); }
+.big-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,3.5vw,3.8rem);
+  font-weight: 300; letter-spacing: -.01em; line-height: 1.1; color: var(--ink);
+}
+.big-title em { font-style: italic; }
+.reveal { opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity:1; transform:none; }
+
+/* SERVICES */
+.services { border-bottom: 1px solid var(--rule); background: var(--white); }
+.services-inner {
+  display: grid; grid-template-columns: 1fr 2fr;
+}
+.services-label {
+  padding: 6rem 3rem 6rem 3.5rem; border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.services-label p { font-size: .82rem; line-height: 2.3; color: var(--ink3); letter-spacing: .04em; margin-top: 2rem; }
+.services-list { }
+.srv-row {
+  display: grid; grid-template-columns: 3rem 1fr auto;
+  gap: 2rem; align-items: center;
+  padding: 2.5rem 3.5rem; border-bottom: 1px solid var(--rule);
+  transition: background .2s; position: relative;
+}
+.srv-row::after {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background:var(--ink); transform:scaleY(0); transform-origin:bottom;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.srv-row:hover { background: var(--hover); }
+.srv-row:hover::after { transform:scaleY(1); }
+.srv-row:last-child { border-bottom: none; }
+.srv-num { font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.18em; color:var(--ink3); }
+.srv-info {}
+.srv-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400;
+  letter-spacing: .02em; margin-bottom: .3rem; transition: letter-spacing .3s;
+}
+.srv-row:hover .srv-name { letter-spacing: .05em; }
+.srv-desc { font-size: .72rem; color: var(--ink3); letter-spacing: .04em; line-height: 1.8; }
+.srv-price { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:300; color:var(--ink); white-space:nowrap; letter-spacing:.02em; }
+
+/* WORKS GALLERY */
+.gallery-section { border-bottom: 1px solid var(--rule); }
+.gallery-header { padding: 5rem 3.5rem 3rem; display: flex; justify-content: space-between; align-items: flex-end; }
+.gallery-filter { display: flex; gap: .4rem; }
+.filter-btn {
+  font-family:'DM Mono',monospace; font-size:.52rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink3); background:none; border:1px solid var(--rule); padding:.28rem .9rem;
+  border-radius:1px; cursor:pointer; transition:background .2s, color .2s, border-color .2s;
+}
+.filter-btn.active, .filter-btn:hover { background:var(--ink); color:var(--white); border-color:var(--ink); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 320px 260px;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+.gallery-item {
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  overflow: hidden; position: relative; cursor: pointer;
+  display: flex; align-items: flex-end; padding: 1.5rem;
+}
+.gallery-item.wide { grid-column: span 2; }
+.gi-bg { position: absolute; inset: 0; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+.gallery-item:hover .gi-bg { transform: scale(1.04); }
+.gi-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(12,12,10,.7) 0%, transparent 50%);
+  opacity: 0; transition: opacity .3s;
+}
+.gallery-item:hover .gi-overlay { opacity: 1; }
+.gi-info {
+  position: relative; z-index: 1;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .3s, transform .3s;
+}
+.gallery-item:hover .gi-info { opacity: 1; transform: none; }
+.gi-cat { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:.3rem; }
+.gi-name { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:300; color:var(--white); letter-spacing:.04em; }
+
+/* フォトカラー */
+.gc1 { background: linear-gradient(145deg, #1a1a18 0%, #2a2520 60%, #1a1a18 100%); }
+.gc2 { background: linear-gradient(145deg, #0e1820 0%, #1a2a35 60%, #0e1820 100%); }
+.gc3 { background: linear-gradient(145deg, #201810 0%, #352820 60%, #201810 100%); }
+.gc4 { background: linear-gradient(145deg, #181818 0%, #282828 100%); }
+.gc5 { background: linear-gradient(145deg, #14181e 0%, #222830 100%); }
+
+/* ABOUT */
+.about {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rule); background: var(--bg);
+}
+.about-left {
+  padding: 7rem 4rem 7rem 3.5rem; border-right: 1px solid var(--rule);
+  position: relative;
+}
+.about-photo {
+  width: 100%; aspect-ratio: 4/5; background: var(--ink);
+  border-radius: 3px; overflow: hidden; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 2rem;
+}
+.about-photo-bg { position: absolute; inset: 0; background: linear-gradient(160deg, #1a1a18 0%, #2e2e2c 100%); }
+.about-monogram {
+  position: relative; z-index: 1;
+  font-family: 'Cormorant Garamond', serif; font-size: 9rem; font-weight: 300;
+  color: rgba(255,255,255,.06); font-style: italic; letter-spacing: -.02em;
+}
+.about-photo-badge {
+  position: absolute; bottom: 1.2rem; right: 1.2rem; z-index: 2;
+  background: var(--white); color: var(--ink);
+  font-family: 'DM Mono', monospace; font-size: .5rem; letter-spacing: .15em;
+  padding: .4rem .9rem; border-radius: 1px;
+}
+.about-name-block { margin-top: 1.5rem; }
+.about-name { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; letter-spacing:.04em; margin-bottom:.2rem; }
+.about-role { font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink3); }
+.about-right {
+  padding: 7rem 3.5rem 7rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.about-lead {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem,2.8vw,2.6rem);
+  font-weight: 300; line-height: 1.45; letter-spacing: -.01em; margin-bottom: 2.5rem;
+}
+.about-lead em { font-style: italic; }
+.about-body { font-size:.84rem; line-height:2.5; color:var(--ink2); letter-spacing:.04em; margin-bottom:1.5rem; }
+.about-tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:2rem; }
+.about-tag {
+  font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink3); border:1px solid var(--rule); padding:.28rem .75rem; border-radius:1px;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.about-tag:hover { background:var(--ink); color:var(--white); border-color:var(--ink); }
+.kpi-row {
+  display:grid; grid-template-columns:repeat(3,1fr); margin-top:3.5rem;
+  border-top:1px solid var(--rule); border-left:1px solid var(--rule);
+}
+.kpi { padding:2rem 1.5rem; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); transition:background .2s; }
+.kpi:hover { background:var(--hover); }
+.kpi-n { font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:300; line-height:1; letter-spacing:-.02em; color:var(--ink); margin-bottom:.4rem; }
+.kpi-l { font-family:'Noto Sans JP',sans-serif; font-size:.62rem; color:var(--ink3); letter-spacing:.08em; }
+
+/* PROCESS */
+.process { border-bottom: 1px solid var(--rule); background: var(--white); }
+.process-header { padding: 5rem 3.5rem 3rem; }
+.process-steps {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.ps {
+  padding: 3rem 2rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  transition: background .25s; position: relative; overflow: hidden;
+}
+.ps:hover { background: var(--hover); }
+.ps-n { font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:rgba(12,12,10,.05); line-height:1; margin-bottom:1.5rem; letter-spacing:-.02em; }
+.ps-icon { font-size:1.4rem; margin-bottom:1rem; }
+.ps-title { font-family:'Syne',sans-serif; font-size:.88rem; font-weight:700; margin-bottom:.7rem; letter-spacing:.02em; }
+.ps-desc { font-size:.73rem; line-height:2; color:var(--ink3); letter-spacing:.04em; }
+
+/* PRICING */
+.pricing { border-bottom: 1px solid var(--rule); background: var(--bg); }
+.pricing-header { padding: 5rem 3.5rem 3rem; }
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.price-card {
+  padding: 3.5rem 3rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  display: flex; flex-direction: column; background: var(--white); transition: background .2s;
+}
+.price-card:hover { background: var(--hover); }
+.price-card.featured { background: var(--ink); }
+.price-card.featured:hover { background: #1a1a18; }
+.price-tier { font-family:'DM Mono',monospace; font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--ink3); margin-bottom:.8rem; }
+.price-card.featured .price-tier { color:rgba(255,255,255,.3); }
+.price-name { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; margin-bottom:2.5rem; letter-spacing:.02em; }
+.price-card.featured .price-name { color:var(--white); }
+.price-num { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; letter-spacing:-.01em; line-height:1; margin-bottom:.4rem; }
+.price-card.featured .price-num { color:var(--white); }
+.price-note { font-family:'DM Mono',monospace; font-size:.52rem; letter-spacing:.15em; color:var(--ink3); margin-bottom:2.5rem; }
+.price-card.featured .price-note { color:rgba(255,255,255,.3); }
+.price-rule { height:1px; background:var(--rule); margin-bottom:2rem; }
+.price-card.featured .price-rule { background:rgba(255,255,255,.1); }
+.price-features { list-style:none; flex:1; }
+.price-features li { display:flex; align-items:flex-start; gap:.7rem; font-size:.76rem; color:var(--ink3); padding:.55rem 0; border-bottom:1px solid var(--rule); letter-spacing:.04em; }
+.price-card.featured .price-features li { color:rgba(255,255,255,.5); border-bottom-color:rgba(255,255,255,.08); }
+.price-features li:last-child { border-bottom:none; }
+.price-features li::before { content:'—'; font-family:'DM Mono',monospace; font-size:.55rem; color:var(--ink3); flex-shrink:0; margin-top:.12rem; }
+.price-card.featured .price-features li::before { color:rgba(255,255,255,.25); }
+.price-btn {
+  display:block; text-align:center; text-decoration:none;
+  font-family:'DM Mono',monospace; font-size:.58rem; letter-spacing:.2em; text-transform:uppercase;
+  padding:.95rem; border-radius:2px; border:1px solid var(--rule); color:var(--ink); margin-top:2.5rem;
+  transition:background .2s, border-color .2s, color .2s;
+}
+.price-btn:hover { background:var(--ink); border-color:var(--ink); color:var(--white); }
+.price-card.featured .price-btn { border-color:rgba(255,255,255,.2); color:rgba(255,255,255,.5); }
+.price-card.featured .price-btn:hover { background:rgba(255,255,255,.1); color:var(--white); }
+
+/* CTA */
+.cta-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rule); background: var(--ink);
+}
+.cta-left {
+  padding: 8rem 4rem 8rem 3.5rem; border-right: 1px solid rgba(255,255,255,.07);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.cta-eyebrow { font-family:'DM Mono',monospace; font-size:.56rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.28); display:flex; align-items:center; gap:.8rem; margin-bottom:2rem; }
+.cta-eyebrow::before { content:''; display:block; width:18px; height:1px; background:rgba(255,255,255,.2); }
+.cta-h { font-family:'Cormorant Garamond',serif; font-size:clamp(2.8rem,5vw,5.5rem); font-weight:300; line-height:1.05; letter-spacing:-.01em; color:var(--white); margin-bottom:1.5rem; }
+.cta-h em { font-style:italic; color:rgba(255,255,255,.35); display:block; }
+.cta-sub { font-size:.82rem; line-height:2.3; color:rgba(255,255,255,.38); letter-spacing:.04em; }
+.cta-right { padding:8rem 3.5rem 8rem 4rem; display:flex; flex-direction:column; justify-content:center; gap:1.2rem; }
+.btn-cta-main { display:block; text-align:center; text-decoration:none; font-family:'DM Mono',monospace; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; background:var(--white); color:var(--ink); padding:1.2rem; border-radius:2px; transition:opacity .2s; }
+.btn-cta-main:hover { opacity:.85; }
+.btn-cta-ghost { display:block; text-align:center; text-decoration:none; font-family:'DM Mono',monospace; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.4); padding:1.2rem; border-radius:2px; transition:border-color .2s, color .2s; }
+.btn-cta-ghost:hover { border-color:rgba(255,255,255,.4); color:rgba(255,255,255,.8); }
+.cta-note { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.15em; color:rgba(255,255,255,.18); text-align:center; }
+
+/* FOOTER */
+footer { display:grid; grid-template-columns:repeat(4,1fr); border-left:1px solid var(--rule); background:var(--white); }
+.foot-cell { padding:2.5rem; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+.foot-logo { font-family:'Syne',sans-serif; font-size:.88rem; font-weight:800; letter-spacing:.22em; text-transform:uppercase; }
+.foot-copy { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.14em; color:var(--ink3); margin-top:.4rem; }
+.foot-label { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink3); margin-bottom:1.2rem; }
+.foot-links { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
+.foot-links a { font-size:.76rem; color:var(--ink2); text-decoration:none; letter-spacing:.04em; transition:color .2s; }
+.foot-links a:hover { color:var(--ink); }
+
+/* ANIMATIONS */
+@keyframes up { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none} }
+@keyframes fadeI { from{opacity:0}to{opacity:1} }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 2rem; }
+  .nav-links { gap: 1.5rem; }
+  .hero-main { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 5rem 2rem 3rem; }
+  .hero-right { padding: 3rem 2rem; }
+  .hero-h1 { font-size: clamp(3.5rem, 10vw, 7rem); }
+  .hero-photo-grid { grid-template-rows: 160px 160px; }
+  .hero-bottom { grid-template-columns: 1fr; }
+  .hero-bl { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 1.5rem 2rem; }
+  .hero-br { padding: 1.5rem 2rem; justify-content: flex-start; }
+  .services-inner { grid-template-columns: 1fr; }
+  .services-label { border-right: none; border-bottom: 1px solid var(--rule); padding: 4rem 2rem 3rem; }
+  .gallery-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: 280px 240px; }
+  .gallery-item.wide { grid-column: span 2; }
+  .about { grid-template-columns: 1fr; }
+  .about-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 4rem 2rem 3rem; }
+  .about-right { padding: 3rem 2rem 4rem; }
+  .process-steps { grid-template-columns: repeat(3,1fr); }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .cta-section { grid-template-columns: 1fr; }
+  .cta-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 5rem 2rem 3rem; }
+  .cta-right { padding: 3rem 2rem 5rem; }
+  footer { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; height: 56px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: block; top: 56px; }
+  .hero { padding-top: 56px; }
+  .hero-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .hero-h1 { font-size: clamp(3rem, 14vw, 5.5rem); }
+  .hero-photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 130px 130px; }
+  .gallery-header { padding: 3.5rem 1.5rem 2rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 200px; }
+  .srv-row { grid-template-columns: 2.5rem 1fr; gap: 1rem; }
+  .srv-price { display: none; }
+  .process-steps { grid-template-columns: repeat(2,1fr); }
+  footer { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-h1 { font-size: clamp(2.8rem, 16vw, 4.5rem); }
+  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .gallery-item { height: 200px; }
+  .gallery-item.wide { grid-column: span 1; height: 220px; }
+  .process-steps { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { padding: 3rem 1.5rem; }
+  .services-label { padding: 3.5rem 1.5rem 2.5rem; }
+  .srv-row { padding: 1.8rem 1.5rem; }
+  .gallery-header { padding: 3.5rem 1.5rem 2rem; }
+  .about-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .about-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .process-header { padding: 3.5rem 1.5rem 2rem; }
+  .pricing-header { padding: 3.5rem 1.5rem 2rem; }
+  .price-card { padding: 2.5rem 2rem; }
+  .cta-left { padding: 4rem 1.5rem 3rem; }
+  .cta-right { padding: 3rem 1.5rem 4rem; }
+  footer { padding: 2.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SHUTTER</a>
+  <ul class="nav-links">
+    <li><a href="#works">Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="#works" onclick="closeMenu()">Works</a></li>
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-main">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Commercial Photographer — Tokyo, Japan</p>
+      <h1 class="hero-h1">
+        Capture<br>
+        <em>the moment</em><br>
+        that matters.
+      </h1>
+      <p class="hero-tagline">
+        企業ブランディング・プロフィール・商品撮影。<br>
+        あなたのビジネスを、一枚の写真で変える。
+      </p>
+    </div>
+    <div class="hero-right">
+      <p class="hero-index">Index — 01</p>
+      <div class="hero-photo-grid">
+        <div class="photo-mock tall">
+          <div class="pm-bg gc1"></div>
+          <div class="pm-figure">Portrait</div>
+          <span class="pm-label">Portrait</span>
+        </div>
+        <div class="photo-mock">
+          <div class="pm-bg gc2"></div>
+          <div class="pm-figure">Office</div>
+          <span class="pm-label">Corporate</span>
+        </div>
+        <div class="photo-mock">
+          <div class="pm-bg gc3"></div>
+          <div class="pm-figure">Product</div>
+          <span class="pm-label">Product</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-bl">
+      <div class="avail-dot"></div>
+      <span class="avail-text">Currently accepting new bookings</span>
+    </div>
+    <div class="hero-br">
+      <a href="#works" class="btn-ghost-w">View Works ↓</a>
+      <a href="#contact" class="btn-w">撮影を依頼する →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Corporate Branding</span><span class="t-sep">/</span>
+    <span>Executive Portrait</span><span class="t-sep">/</span>
+    <span>Product Photography</span><span class="t-sep">/</span>
+    <span>Event Coverage</span><span class="t-sep">/</span>
+    <span>Office Interior</span><span class="t-sep">/</span>
+    <span>Web & SNS Content</span><span class="t-sep">/</span>
+    <span>Corporate Branding</span><span class="t-sep">/</span>
+    <span>Executive Portrait</span><span class="t-sep">/</span>
+    <span>Product Photography</span><span class="t-sep">/</span>
+    <span>Event Coverage</span><span class="t-sep">/</span>
+    <span>Office Interior</span><span class="t-sep">/</span>
+    <span>Web & SNS Content</span><span class="t-sep">/</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="services-label reveal">
+      <div class="eyebrow">Services</div>
+      <h2 class="big-title">撮影<em>サービス</em></h2>
+      <p>ビジネスの場面に合わせた5つの撮影カテゴリ。初回相談から納品まで、すべてワンストップで対応します。</p>
+    </div>
+    <div class="services-list">
+      <div class="srv-row reveal">
+        <div class="srv-num">01</div>
+        <div class="srv-info">
+          <div class="srv-name">Executive Portrait</div>
+          <div class="srv-desc">経営者・役員・社員のプロフィール写真。LinkedInやWebサイト向けに最適なポートレート。</div>
+        </div>
+        <div class="srv-price">¥30,000 〜</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">02</div>
+        <div class="srv-info">
+          <div class="srv-name">Corporate Branding</div>
+          <div class="srv-desc">オフィス・チーム・働く風景。企業ブランドイメージを高める写真素材を一括制作。</div>
+        </div>
+        <div class="srv-price">¥80,000 〜</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">03</div>
+        <div class="srv-info">
+          <div class="srv-name">Product Photography</div>
+          <div class="srv-desc">ECサイト・カタログ・広告向けの商品撮影。白背景からライフスタイル系まで対応。</div>
+        </div>
+        <div class="srv-price">¥50,000 〜</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">04</div>
+        <div class="srv-info">
+          <div class="srv-name">Event & Conference</div>
+          <div class="srv-desc">セミナー・展示会・社内イベントの記録撮影。当日納品にも対応可能。</div>
+        </div>
+        <div class="srv-price">¥60,000 〜</div>
+      </div>
+      <div class="srv-row reveal">
+        <div class="srv-num">05</div>
+        <div class="srv-info">
+          <div class="srv-name">SNS Content Pack</div>
+          <div class="srv-desc">Instagram・LinkedInなどSNS用の写真を月次で定期制作。継続的なブランド発信を支援。</div>
+        </div>
+        <div class="srv-price">¥40,000 〜</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="works">
+  <div class="gallery-header reveal">
+    <div>
+      <div class="eyebrow">Works</div>
+      <h2 class="big-title">制作<em>実績</em></h2>
+    </div>
+    <div class="gallery-filter">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Portrait</button>
+      <button class="filter-btn">Corporate</button>
+      <button class="filter-btn">Product</button>
+    </div>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item wide">
+      <div class="gi-bg gc1"></div>
+      <div class="gi-overlay"></div>
+      <div class="gi-info">
+        <div class="gi-cat">Corporate Branding</div>
+        <div class="gi-name">株式会社〇〇 — オフィスブランディング</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gi-bg gc2"></div>
+      <div class="gi-overlay"></div>
+      <div class="gi-info">
+        <div class="gi-cat">Executive Portrait</div>
+        <div class="gi-name">CEO プロフィール撮影</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gi-bg gc3"></div>
+      <div class="gi-overlay"></div>
+      <div class="gi-info">
+        <div class="gi-cat">Product</div>
+        <div class="gi-name">コスメブランド 商品撮影</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gi-bg gc4"></div>
+      <div class="gi-overlay"></div>
+      <div class="gi-info">
+        <div class="gi-cat">Event</div>
+        <div class="gi-name">年次カンファレンス</div>
+      </div>
+    </div>
+    <div class="gallery-item wide">
+      <div class="gi-bg gc5"></div>
+      <div class="gi-overlay"></div>
+      <div class="gi-info">
+        <div class="gi-cat">Corporate Branding</div>
+        <div class="gi-name">スタートアップ チームフォト</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <div class="about-photo">
+      <div class="about-photo-bg"></div>
+      <div class="about-monogram">S</div>
+      <div class="about-photo-badge">Photographer</div>
+    </div>
+    <div class="about-name-block">
+      <div class="about-name">Sota Yamamoto</div>
+      <div class="about-role">Commercial Photographer — Tokyo</div>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <div class="eyebrow">About</div>
+    <p class="about-lead">
+      写真は、<em>ビジネスの<br>言語</em>だと思っている。
+    </p>
+    <p class="about-body">広告代理店でのクリエイティブ職を経て、独立。企業のブランド戦略を理解した上で撮影するため、「ただの記録」ではなく「伝わる写真」を提供できます。</p>
+    <p class="about-body">撮影前のヒアリングを大切にしています。どんな印象を与えたいか、誰に届けたいのかを丁寧に聞いた上で、最適なライティング・構図・雰囲気を提案します。</p>
+    <div class="about-tags">
+      <span class="about-tag">Sony α1</span>
+      <span class="about-tag">Profoto</span>
+      <span class="about-tag">Capture One</span>
+      <span class="about-tag">Retouching</span>
+      <span class="about-tag">即日納品可</span>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-n">300+</div><div class="kpi-l">撮影実績</div></div>
+      <div class="kpi"><div class="kpi-n">5年</div><div class="kpi-l">独立歴</div></div>
+      <div class="kpi"><div class="kpi-n">翌日〜</div><div class="kpi-l">納品スピード</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="process-header reveal">
+    <div class="eyebrow">Process</div>
+    <h2 class="big-title">撮影の<em>流れ</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="ps reveal">
+      <div class="ps-n">01</div>
+      <div class="ps-icon">💬</div>
+      <div class="ps-title">ヒアリング</div>
+      <p class="ps-desc">用途・イメージ・ご予算をヒアリング。方向性をしっかり固めます。</p>
+    </div>
+    <div class="ps reveal">
+      <div class="ps-n">02</div>
+      <div class="ps-icon">📋</div>
+      <div class="ps-title">プラン提案</div>
+      <p class="ps-desc">撮影プランと概算見積もりをご提示。納得いただいてから進めます。</p>
+    </div>
+    <div class="ps reveal">
+      <div class="ps-n">03</div>
+      <div class="ps-icon">📸</div>
+      <div class="ps-title">撮影当日</div>
+      <p class="ps-desc">スタジオまたはご指定の場所で撮影。リラックスできる雰囲気を大切にします。</p>
+    </div>
+    <div class="ps reveal">
+      <div class="ps-n">04</div>
+      <div class="ps-icon">✨</div>
+      <div class="ps-title">レタッチ</div>
+      <p class="ps-desc">カラーグレーディング・肌補正など丁寧にレタッチ。ご要望にも対応します。</p>
+    </div>
+    <div class="ps reveal">
+      <div class="ps-n">05</div>
+      <div class="ps-icon">📦</div>
+      <div class="ps-title">納品</div>
+      <p class="ps-desc">高解像度データをクラウドでお届け。最短翌日納品も可能です。</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header reveal">
+    <div class="eyebrow">Pricing</div>
+    <h2 class="big-title">料金<em>プラン</em></h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Basic</div>
+      <div class="price-name">ポートレート撮影</div>
+      <div class="price-num">¥30,000</div>
+      <div class="price-note">税込 / 2時間</div>
+      <div class="price-rule"></div>
+      <ul class="price-features">
+        <li>撮影2時間</li>
+        <li>納品データ 20枚〜</li>
+        <li>基本レタッチ込み</li>
+        <li>スタジオ or 屋外</li>
+        <li>納品：3営業日以内</li>
+      </ul>
+      <a href="#contact" class="price-btn">相談・見積もり</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-tier">Standard</div>
+      <div class="price-name">コーポレート撮影</div>
+      <div class="price-num">¥80,000</div>
+      <div class="price-note">税込 / 半日</div>
+      <div class="price-rule"></div>
+      <ul class="price-features">
+        <li>撮影4時間</li>
+        <li>納品データ 50枚〜</li>
+        <li>詳細レタッチ込み</li>
+        <li>オフィス出張対応</li>
+        <li>Web用リサイズ対応</li>
+        <li>納品：翌営業日〜</li>
+      </ul>
+      <a href="#contact" class="price-btn">相談・見積もり</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-tier">Premium</div>
+      <div class="price-name">ブランディングパック</div>
+      <div class="price-num">¥200,000</div>
+      <div class="price-note">税込 / 1日</div>
+      <div class="price-rule"></div>
+      <ul class="price-features">
+        <li>撮影8時間</li>
+        <li>納品データ 100枚〜</li>
+        <li>ヘアメイク手配可</li>
+        <li>スタイリスト手配可</li>
+        <li>SNS用縦型編集込み</li>
+        <li>即日納品対応</li>
+      </ul>
+      <a href="#contact" class="price-btn">相談・見積もり</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-left reveal">
+    <div class="cta-eyebrow">Contact</div>
+    <h2 class="cta-h">
+      まず、話しましょう。<br>
+      <em>無料相談受付中。</em>
+    </h2>
+    <p class="cta-sub">撮影内容・ご予算・スケジュールなど、どんな小さなことでもお気軽にご相談ください。見積もりは無料です。</p>
+  </div>
+  <div class="cta-right reveal">
+    <a href="#" class="btn-cta-main">メールで相談する →</a>
+    <a href="#" class="btn-cta-ghost">実績をもっと見る</a>
+    <p class="cta-note">通常24時間以内にご返信します</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-cell">
+    <div class="foot-logo">SHUTTER</div>
+    <div class="foot-copy">© 2024 Sota Yamamoto Photography</div>
+  </div>
+  <div class="foot-cell">
+    <div class="foot-label">Navigation</div>
+    <ul class="foot-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+  </div>
+  <div class="foot-cell">
+    <div class="foot-label">Services</div>
+    <ul class="foot-links">
+      <li><a href="#">Executive Portrait</a></li>
+      <li><a href="#">Corporate Branding</a></li>
+      <li><a href="#">Product Photography</a></li>
+      <li><a href="#">Event Coverage</a></li>
+    </ul>
+  </div>
+  <div class="foot-cell">
+    <div class="foot-label">Follow</div>
+    <ul class="foot-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">Behance</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .srv-row, .price-card, .kpi, .about-tag, .filter-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('on'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('on'));
+});
+document.querySelectorAll('.gallery-item, .photo-mock').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.classList.remove('on'); cur.classList.add('photo'); });
+  el.addEventListener('mouseleave', () => cur.classList.remove('photo'));
+});
+
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// FILTER (UI only)
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// REVEAL
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((en, i) => {
+    if (en.isIntersecting) setTimeout(() => en.target.classList.add('in'), i * 60);
+  });
+}, { threshold: .07 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

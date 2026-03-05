@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEWI SPA — Bridal & Facial Esthetic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;1,400&family=Noto+Serif+JP:wght@200;300;400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brown-deep:  #1c1008;
+  --brown-dark:  #2e1a0e;
+  --brown-mid:   #5c3520;
+  --brown-warm:  #8b5a3c;
+  --gold:        #c9983a;
+  --gold-light:  #e8c87a;
+  --gold-pale:   #f5e9c8;
+  --ivory:       #fdf8f0;
+  --ivory-dark:  #f0e8d8;
+  --cream:       #faf5ec;
+  --text-dark:   #1c1008;
+  --text-mid:    #6b4c38;
+  --text-light:  #a0806a;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.8rem 5rem;
+  background: rgba(28,16,8,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201,152,58,0.2);
+}
+.nav-logo {
+  display: flex; flex-direction: column; align-items: flex-start;
+  text-decoration: none;
+}
+.nav-logo-main {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--gold-light);
+  letter-spacing: 0.35em;
+}
+.nav-logo-sub {
+  font-size: 0.5rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(201,152,58,0.6);
+  margin-top: 0.1rem;
+}
+.nav-links {
+  display: flex; gap: 3rem; list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(245,233,200,0.6);
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-links a:hover::after { width: 100%; }
+.nav-reserve {
+  font-family: 'Cinzel', serif !important;
+  border: 1px solid var(--gold) !important;
+  color: var(--gold) !important;
+  padding: 0.6rem 1.8rem;
+  letter-spacing: 0.2em !important;
+  transition: background 0.3s, color 0.3s !important;
+}
+.nav-reserve:hover {
+  background: var(--gold) !important;
+  color: var(--brown-deep) !important;
+}
+.nav-reserve::after { display: none !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--brown-deep);
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center;
+}
+/* Batik-inspired pattern */
+.hero-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 3px 3px at 20px 20px, rgba(201,152,58,0.15) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 2px at 60px 60px, rgba(201,152,58,0.1) 0%, transparent 100%);
+  background-size: 80px 80px;
+}
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.hero-glow-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(201,152,58,0.12) 0%, transparent 70%);
+  right: -100px; top: -100px;
+}
+.hero-glow-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(92,53,32,0.4) 0%, transparent 70%);
+  left: 20%; bottom: 0;
+}
+/* Ornamental border lines */
+.hero-ornament-top, .hero-ornament-bottom {
+  position: absolute;
+  left: 5rem; right: 5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,152,58,0.4), rgba(201,152,58,0.7), rgba(201,152,58,0.4), transparent);
+}
+.hero-ornament-top { top: 5rem; }
+.hero-ornament-bottom { bottom: 5rem; }
+.hero-ornament-top::before, .hero-ornament-bottom::before,
+.hero-ornament-top::after, .hero-ornament-bottom::after {
+  content: '◆';
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  font-size: 0.4rem;
+  color: var(--gold);
+}
+.hero-ornament-top::before, .hero-ornament-bottom::before { left: 0; }
+.hero-ornament-top::after, .hero-ornament-bottom::after { right: 0; }
+
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 8rem 5rem;
+  max-width: 680px;
+}
+.hero-kana {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.3s forwards;
+}
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: 0.12em;
+  color: var(--ivory);
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.5s forwards;
+}
+.hero-title-accent {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  margin-bottom: 2.5rem;
+  display: block;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.7s forwards;
+}
+.hero-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.8s forwards;
+}
+.hero-divider-line {
+  flex: 1; max-width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.hero-divider-line.right {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.hero-divider-gem {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+.hero-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.88rem;
+  color: rgba(245,233,200,0.65);
+  line-height: 2.4;
+  letter-spacing: 0.08em;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.9s forwards;
+}
+.hero-btns {
+  display: flex; gap: 1.5rem; align-items: center;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.1s forwards;
+}
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--brown-deep);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  padding: 1.1rem 2.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 30px rgba(201,152,58,0.35);
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,152,58,0.5); }
+.btn-outline-gold {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  border: 1px solid rgba(201,152,58,0.5);
+  color: var(--gold-light);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  padding: 1.1rem 2.2rem;
+  transition: border-color 0.3s, color 0.3s;
+}
+.btn-outline-gold:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Hero right: lotus / mandala visual */
+.hero-visual {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 46%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  animation: fadeIn 1.5s ease 0.5s forwards;
+}
+.mandala-wrap {
+  position: relative;
+  width: 420px; height: 420px;
+}
+.mandala-ring {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(201,152,58,0.2);
+}
+.mandala-ring:nth-child(1) { width: 420px; height: 420px; animation: rotateSlow 60s linear infinite; border-color: rgba(201,152,58,0.1); }
+.mandala-ring:nth-child(2) { width: 340px; height: 340px; animation: rotateSlow 40s linear infinite reverse; border-color: rgba(201,152,58,0.15); }
+.mandala-ring:nth-child(3) { width: 260px; height: 260px; animation: rotateSlow 30s linear infinite; border-color: rgba(201,152,58,0.2); }
+.mandala-ring:nth-child(4) { width: 180px; height: 180px; animation: rotateSlow 20s linear infinite reverse; border-color: rgba(201,152,58,0.3); }
+.mandala-ring:nth-child(5) { width: 100px; height: 100px; border-color: rgba(201,152,58,0.4); }
+.mandala-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  color: rgba(201,152,58,0.3);
+  letter-spacing: 0.1em;
+}
+.mandala-dots {
+  position: absolute; top: 50%; left: 50%;
+  width: 420px; height: 420px;
+  transform: translate(-50%, -50%);
+  animation: rotateSlow 25s linear infinite;
+}
+@keyframes rotateSlow {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+/* ── CONCEPT STRIP ── */
+.concept-strip {
+  background: var(--gold);
+  padding: 1rem 0;
+  overflow: hidden;
+}
+.strip-track {
+  display: flex; gap: 4rem;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+.strip-track span {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  color: var(--brown-deep);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.strip-gem { color: rgba(28,16,8,0.4) !important; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── ABOUT ── */
+.about-section {
+  padding: 10rem 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.about-visual {
+  position: relative;
+}
+.about-frame {
+  width: 100%;
+  padding-bottom: 130%;
+  background: linear-gradient(155deg, var(--brown-dark) 0%, var(--brown-mid) 50%, #3d2010 100%);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.about-frame::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 60% 30%, rgba(201,152,58,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(92,53,32,0.5) 0%, transparent 40%);
+}
+/* Batik-style SVG pattern inside frame */
+.about-frame-pattern {
+  position: absolute; inset: 0;
+  opacity: 0.08;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(201,152,58,0.5) 0px, rgba(201,152,58,0.5) 1px,
+    transparent 1px, transparent 20px
+  );
+}
+.about-frame-content {
+  position: absolute;
+  bottom: 3rem; left: 3rem; right: 3rem;
+}
+.about-frame-quote {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: rgba(245,233,200,0.5);
+  line-height: 1.8;
+}
+.about-corner {
+  position: absolute;
+  width: 30px; height: 30px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.5;
+}
+.about-corner-tl { top: 1.5rem; left: 1.5rem; border-width: 1px 0 0 1px; }
+.about-corner-tr { top: 1.5rem; right: 1.5rem; border-width: 1px 1px 0 0; }
+.about-corner-bl { bottom: 1.5rem; left: 1.5rem; border-width: 0 0 1px 1px; }
+.about-corner-br { bottom: 1.5rem; right: 1.5rem; border-width: 0 1px 1px 0; }
+.about-badge {
+  position: absolute;
+  top: -2rem; right: -2rem;
+  width: 100px; height: 100px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  box-shadow: 0 8px 30px rgba(201,152,58,0.5);
+}
+.about-badge-num {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  color: var(--brown-deep);
+  line-height: 1;
+}
+.about-badge-lbl {
+  font-size: 0.45rem;
+  letter-spacing: 0.2em;
+  color: rgba(28,16,8,0.7);
+  text-transform: uppercase;
+  margin-top: 0.1rem;
+}
+.about-content {}
+.eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--gold);
+}
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  margin-bottom: 2rem;
+}
+.section-title span { color: var(--gold); }
+.ornament-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2rem;
+}
+.ornament-divider::before, .ornament-divider::after {
+  content: ''; flex: 1; max-width: 40px;
+  height: 1px; background: var(--gold-light);
+}
+.ornament-gem {
+  width: 5px; height: 5px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+.body-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.88rem;
+  line-height: 2.5;
+  color: var(--text-mid);
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+}
+.stats-row {
+  display: flex; gap: 3rem;
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--ivory-dark);
+}
+.stat {}
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.65rem;
+  color: var(--text-light);
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
+}
+
+/* ── TREATMENT ── */
+.treatment-section {
+  background: var(--brown-deep);
+  padding: 10rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.treatment-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(201,152,58,0.03) 0px, rgba(201,152,58,0.03) 1px,
+    transparent 1px, transparent 30px
+  );
+}
+.treatment-inner { max-width: 1400px; margin: 0 auto; }
+.treatment-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+.treatment-header .section-title { color: var(--ivory); }
+.treatment-header .eyebrow { justify-content: center; }
+.treatment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.treatment-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,152,58,0.1);
+  padding: 3.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s, border-color 0.4s;
+}
+.treatment-card:hover {
+  background: rgba(201,152,58,0.06);
+  border-color: rgba(201,152,58,0.3);
+}
+.treatment-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+.treatment-card:hover::before { transform: scaleX(1); }
+.treatment-num {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: rgba(201,152,58,0.1);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.treatment-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+}
+.treatment-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--ivory);
+  margin-bottom: 0.4rem;
+}
+.treatment-name-ja {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.7rem;
+  color: rgba(201,152,58,0.6);
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+.treatment-desc {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.78rem;
+  line-height: 2.2;
+  color: rgba(245,233,200,0.45);
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+}
+.treatment-price {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--gold);
+}
+.treatment-price-unit {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.55rem;
+  color: rgba(201,152,58,0.5);
+  letter-spacing: 0.15em;
+  margin-left: 0.3rem;
+}
+.treatment-duration {
+  font-size: 0.6rem;
+  color: rgba(245,233,200,0.3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* ── BRIDAL ── */
+.bridal-section {
+  padding: 10rem 5rem;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.bridal-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,152,58,0.08) 0%, transparent 60%);
+}
+.bridal-inner { max-width: 1400px; margin: 0 auto; }
+.bridal-lead {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 6rem;
+}
+.bridal-lead .section-title { font-size: clamp(2.2rem, 3.5vw, 3.5rem); }
+.bridal-lead .body-text { text-align: center; }
+.bridal-plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.plan-card {
+  background: var(--ivory);
+  border: 1px solid var(--ivory-dark);
+  padding: 3rem 2.5rem;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(201,152,58,0.15);
+}
+.plan-card.featured {
+  background: var(--brown-deep);
+  border-color: rgba(201,152,58,0.3);
+}
+.plan-card.featured::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--brown-deep);
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  padding: 0.3rem 1.5rem;
+}
+.plan-tier {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.plan-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.plan-card.featured .plan-name { color: var(--ivory); }
+.plan-price {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  margin: 1.5rem 0;
+  line-height: 1;
+}
+.plan-price-note {
+  font-size: 0.6rem;
+  color: var(--text-light);
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+.plan-card.featured .plan-price-note { color: rgba(245,233,200,0.4); }
+.plan-features {
+  list-style: none;
+  margin-bottom: 2.5rem;
+}
+.plan-features li {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--ivory-dark);
+  display: flex; align-items: center; gap: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.plan-card.featured .plan-features li {
+  color: rgba(245,233,200,0.65);
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+.plan-features li::before {
+  content: '◆';
+  font-size: 0.4rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.btn-plan {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  padding: 1rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  transition: background 0.3s, color 0.3s;
+}
+.btn-plan:hover, .plan-card.featured .btn-plan {
+  background: var(--gold);
+  color: var(--brown-deep);
+}
+.plan-card.featured .btn-plan:hover {
+  background: var(--gold-light);
+}
+
+/* ── FLOW ── */
+.flow-section {
+  padding: 10rem 5rem;
+  background: var(--brown-deep);
+}
+.flow-inner { max-width: 1100px; margin: 0 auto; }
+.flow-header { text-align: center; margin-bottom: 6rem; }
+.flow-header .section-title { color: var(--ivory); }
+.flow-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 0 2rem;
+}
+.flow-line {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
+  margin: 0 auto;
+  position: relative;
+}
+.flow-step {
+  padding: 0 0 4rem;
+  position: relative;
+}
+.flow-step.left { grid-column: 1; text-align: right; }
+.flow-step.right { grid-column: 3; }
+.flow-dot {
+  position: absolute;
+  top: 0.2rem;
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(201,152,58,0.6);
+}
+.flow-step.left .flow-dot { right: -3.5rem; }
+.flow-step.right .flow-dot { left: -3.5rem; }
+.flow-step-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.flow-step-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--ivory);
+  margin-bottom: 0.8rem;
+}
+.flow-step-desc {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.78rem;
+  line-height: 2.2;
+  color: rgba(245,233,200,0.45);
+  letter-spacing: 0.04em;
+}
+
+/* ── TESTIMONIAL ── */
+.testimonial-section {
+  padding: 10rem 5rem;
+  background: var(--ivory);
+}
+.testi-inner { max-width: 1400px; margin: 0 auto; }
+.testi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.testi-card {
+  background: var(--cream);
+  border: 1px solid var(--ivory-dark);
+  padding: 3rem;
+  position: relative;
+  transition: border-color 0.3s;
+}
+.testi-card:hover { border-color: rgba(201,152,58,0.3); }
+.testi-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 1.5rem; left: 2rem;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 5rem;
+  color: rgba(201,152,58,0.12);
+  line-height: 1;
+}
+.testi-stars {
+  display: flex; gap: 0.2rem;
+  margin-bottom: 1.5rem;
+}
+.testi-star { color: var(--gold); font-size: 0.8rem; }
+.testi-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.88rem;
+  line-height: 2.4;
+  color: var(--text-mid);
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+}
+.testi-author {
+  display: flex; align-items: center; gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ivory-dark);
+}
+.testi-avatar {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--brown-warm), var(--brown-mid));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--gold-light);
+}
+.testi-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dark);
+}
+.testi-info {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.65rem;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  margin-top: 0.2rem;
+}
+
+/* ── ACCESS ── */
+.access-section {
+  padding: 10rem 5rem;
+  background: var(--brown-dark);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7rem;
+  align-items: start;
+}
+.access-section .section-title { color: var(--ivory); }
+.access-table { margin-top: 2.5rem; }
+.access-row {
+  display: flex; gap: 2rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(201,152,58,0.12);
+}
+.access-lbl {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  min-width: 80px;
+  padding-top: 0.15rem;
+  text-transform: uppercase;
+}
+.access-val {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.85rem;
+  line-height: 1.9;
+  color: rgba(245,233,200,0.65);
+  letter-spacing: 0.05em;
+}
+.access-map {
+  height: 420px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,152,58,0.15);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.access-map::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,152,58,0.04) 40px, rgba(201,152,58,0.04) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,152,58,0.04) 40px, rgba(201,152,58,0.04) 41px);
+}
+.map-pin-wrap { text-align: center; position: relative; z-index: 1; }
+.map-pin-gold {
+  width: 44px; height: 44px;
+  background: var(--gold);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  margin: 0 auto 1rem;
+  box-shadow: 0 6px 24px rgba(201,152,58,0.5);
+  position: relative;
+}
+.map-pin-gold::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 12px; height: 12px;
+  background: var(--brown-deep);
+  border-radius: 50%;
+}
+.map-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: 10rem 5rem;
+  background: var(--brown-deep);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-ornament {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,152,58,0.06);
+}
+.cta-ornament-2 {
+  width: 500px; height: 500px;
+  border-color: rgba(201,152,58,0.08);
+}
+.cta-ornament-3 {
+  width: 300px; height: 300px;
+  border-color: rgba(201,152,58,0.1);
+}
+.cta-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+.cta-kana {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+.cta-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--ivory);
+  line-height: 1.3;
+  margin-bottom: 2.5rem;
+}
+.cta-title span { color: var(--gold); }
+.cta-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.88rem;
+  color: rgba(245,233,200,0.5);
+  line-height: 2.5;
+  letter-spacing: 0.08em;
+  margin-bottom: 4rem;
+}
+.cta-btns { display: flex; gap: 1.5rem; justify-content: center; }
+
+/* ── FOOTER ── */
+footer {
+  background: #0e0804;
+  padding: 4rem 5rem;
+  border-top: 1px solid rgba(201,152,58,0.15);
+}
+.footer-top {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(201,152,58,0.1);
+  margin-bottom: 2.5rem;
+}
+.footer-logo-main {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  color: var(--gold-light);
+}
+.footer-logo-sub {
+  font-size: 0.5rem;
+  letter-spacing: 0.4em;
+  color: rgba(201,152,58,0.4);
+  margin-top: 0.2rem;
+}
+.footer-nav {
+  display: flex; gap: 2.5rem; list-style: none;
+}
+.footer-nav a {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245,233,200,0.3);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  transition: color 0.3s;
+}
+.footer-nav a:hover { color: var(--gold); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-size: 0.55rem;
+  color: rgba(245,233,200,0.2);
+  letter-spacing: 0.15em;
+}
+.footer-sns { display: flex; gap: 1rem; }
+.sns-icon {
+  width: 34px; height: 34px;
+  border: 1px solid rgba(201,152,58,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem;
+  color: rgba(201,152,58,0.4);
+  text-decoration: none;
+  transition: all 0.3s;
+  letter-spacing: 0;
+}
+.sns-icon:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,152,58,0.08);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── HAMBURGER & MOBILE MENU ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-hamburger span {
+  display: block; width: 100%; height: 1.5px; background: rgba(232,192,106,.7);
+  transition: transform .3s ease, opacity .3s ease;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 490;
+  padding: 3rem 1.5rem; background: #1a0e06;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+}
+.mobile-menu.open { opacity: 1; transform: none; pointer-events: all; }
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.mobile-menu ul li { border-bottom: 1px solid rgba(128,128,128,.15); }
+.mobile-menu ul li a {
+  display: block; padding: 1.4rem 0; font-size: 1.8rem; font-weight: 300; color: rgba(232,192,106,.8);
+  letter-spacing: .04em; text-decoration: none; transition: opacity .2s;
+}
+.mobile-menu ul li a:hover { opacity: .6; }
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: block; }
+}
+
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 2rem; }
+  .about-section { grid-template-columns: 1fr; }
+  .treatment-grid { grid-template-columns: repeat(2,1fr); }
+  .bridal-plans { grid-template-columns: 1fr; }
+  .flow-timeline { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: repeat(2,1fr); }
+  .access-section { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; height: 56px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: block; top: 56px; }
+  .hero { padding-top: 56px; }
+  .hero-content { padding: 3.5rem 1.5rem; }
+  .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
+  .treatment-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .about-section { padding: 4rem 1.5rem; }
+  .access-section { padding: 4rem 1.5rem; }
+  .cta-section { padding: 4rem 1.5rem; }
+  .footer-top { padding: 3rem 1.5rem; flex-direction: column; gap: 2rem; }
+  .footer-bottom { padding: 1.2rem 1.5rem; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(2.8rem, 14vw, 4rem); }
+  .section-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+  .cta-inner { padding: 3rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-main">DEWI SPA</span>
+    <span class="nav-logo-sub">Bridal &amp; Facial Esthetic</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#treatment">Treatment</a></li>
+    <li><a href="#bridal">Bridal</a></li>
+    <li><a href="#access">Access</a></li>
+    <li><a href="#reserve" class="nav-reserve">Reserve</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- モバイルメニュー -->
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="#menu" onclick="closeMenu()">コース</a></li>
+    <li><a href="#staff" onclick="closeMenu()">スタッフ</a></li>
+    <li><a href="#access" onclick="closeMenu()">アクセス</a></li>
+    <li><a href="#reserve" onclick="closeMenu()">ご予約</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-ornament-top"></div>
+  <div class="hero-ornament-bottom"></div>
+
+  <div class="hero-content">
+    <p class="hero-kana">あなたの輝きを、取り戻す場所</p>
+    <h1 class="hero-title">DEWI<br>SPA</h1>
+    <span class="hero-title-accent">Bridal &amp; Facial Esthetic</span>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-gem"></div>
+      <div class="hero-divider-line right"></div>
+    </div>
+    <p class="hero-text">
+      バリ島のリゾートに着想を得た、<br>
+      五感で感じる極上のエステティック体験。<br>
+      特別な日を前に、最高の自分へ。
+    </p>
+    <div class="hero-btns">
+      <a href="#reserve" class="btn-gold">ご予約はこちら</a>
+      <a href="#bridal" class="btn-outline-gold">Bridal Plan</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="mandala-wrap">
+      <div class="mandala-ring"></div>
+      <div class="mandala-ring"></div>
+      <div class="mandala-ring"></div>
+      <div class="mandala-ring"></div>
+      <div class="mandala-ring"></div>
+      <div class="mandala-center">✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT STRIP -->
+<div class="concept-strip">
+  <div class="strip-track">
+    <span>Facial Treatment</span><span class="strip-gem">◆</span>
+    <span>Bridal Esthetic</span><span class="strip-gem">◆</span>
+    <span>Body Ritual</span><span class="strip-gem">◆</span>
+    <span>Head Spa</span><span class="strip-gem">◆</span>
+    <span>Skin Care</span><span class="strip-gem">◆</span>
+    <span>Resort Wellness</span><span class="strip-gem">◆</span>
+    <span>Facial Treatment</span><span class="strip-gem">◆</span>
+    <span>Bridal Esthetic</span><span class="strip-gem">◆</span>
+    <span>Body Ritual</span><span class="strip-gem">◆</span>
+    <span>Head Spa</span><span class="strip-gem">◆</span>
+    <span>Skin Care</span><span class="strip-gem">◆</span>
+    <span>Resort Wellness</span><span class="strip-gem">◆</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-visual reveal">
+    <div class="about-frame">
+      <div class="about-frame-pattern"></div>
+      <div class="about-corner about-corner-tl"></div>
+      <div class="about-corner about-corner-tr"></div>
+      <div class="about-corner about-corner-bl"></div>
+      <div class="about-corner about-corner-br"></div>
+      <div class="about-frame-content">
+        <div class="about-frame-quote">"Beauty is the<br>harmony of the soul."</div>
+      </div>
+    </div>
+    <div class="about-badge">
+      <div class="about-badge-num">8</div>
+      <div class="about-badge-lbl">Years</div>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="eyebrow reveal">About Dewi Spa</div>
+    <h2 class="section-title reveal">至福のひとときを、<br><span>あなただけ</span>に。</h2>
+    <div class="ornament-divider reveal"><div class="ornament-gem"></div></div>
+    <p class="body-text reveal">
+      DEWI SPAは、バリ島の伝統的なウェルネス哲学をベースに、最新のスキンケア技術を融合させた完全個室制エステサロンです。
+    </p>
+    <p class="body-text reveal">
+      特に、結婚式を控えたプレ花嫁様へのトータルビューティーケアに力を入れており、多くの花嫁様の「一生に一度の輝き」を支えてきました。
+    </p>
+    <div class="stats-row reveal">
+      <div class="stat">
+        <div class="stat-num">3,000<span style="font-size:1.2rem;">+</span></div>
+        <div class="stat-label">累計施術数</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98<span style="font-size:1.2rem;">%</span></div>
+        <div class="stat-label">ブライダル満足度</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8<span style="font-size:1.2rem;">年</span></div>
+        <div class="stat-label">営業実績</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENT -->
+<section class="treatment-section" id="treatment">
+  <div class="treatment-inner">
+    <div class="treatment-header">
+      <div class="eyebrow reveal" style="justify-content:center;color:var(--gold);">Treatment Menu</div>
+      <h2 class="section-title reveal" style="color:var(--ivory);">施術メニュー</h2>
+    </div>
+    <div class="treatment-grid">
+      <div class="treatment-card reveal">
+        <div class="treatment-num">01</div>
+        <div class="treatment-icon">✨</div>
+        <div class="treatment-name">Royal Facial</div>
+        <div class="treatment-name-ja">ロイヤルフェイシャル</div>
+        <div class="treatment-desc">クレンジングから導入・美容液・マスクまで。肌の奥深くから透明感を引き出す贅沢フルコース。</div>
+        <div class="treatment-price">¥18,000<span class="treatment-price-unit">tax incl.</span></div>
+        <div class="treatment-duration">⏱ 90 min</div>
+      </div>
+      <div class="treatment-card reveal">
+        <div class="treatment-num">02</div>
+        <div class="treatment-icon">🌿</div>
+        <div class="treatment-name">Bali Ritual</div>
+        <div class="treatment-name-ja">バリリチュアルボディ</div>
+        <div class="treatment-desc">バリ島の伝統スクラブ＋アロマオイルマッサージ。全身の巡りを整え、深いリラクゼーションへ。</div>
+        <div class="treatment-price">¥22,000<span class="treatment-price-unit">tax incl.</span></div>
+        <div class="treatment-duration">⏱ 120 min</div>
+      </div>
+      <div class="treatment-card reveal">
+        <div class="treatment-num">03</div>
+        <div class="treatment-icon">💎</div>
+        <div class="treatment-name">Lift & Glow</div>
+        <div class="treatment-name-ja">リフトアップ小顔</div>
+        <div class="treatment-desc">ハンドテクニック＋EMSで輪郭を整え、ハリと弾力のある肌を実現。即効性で人気のメニュー。</div>
+        <div class="treatment-price">¥15,000<span class="treatment-price-unit">tax incl.</span></div>
+        <div class="treatment-duration">⏱ 75 min</div>
+      </div>
+      <div class="treatment-card reveal">
+        <div class="treatment-num">04</div>
+        <div class="treatment-icon">🌸</div>
+        <div class="treatment-name">Pore Clarity</div>
+        <div class="treatment-name-ja">毛穴集中ケア</div>
+        <div class="treatment-desc">毛穴の詰まり・黒ずみ・開きに特化した集中ケア。スチーム＋クレイマスクで陶器肌へ。</div>
+        <div class="treatment-price">¥12,000<span class="treatment-price-unit">tax incl.</span></div>
+        <div class="treatment-duration">⏱ 60 min</div>
+      </div>
+      <div class="treatment-card reveal">
+        <div class="treatment-num">05</div>
+        <div class="treatment-icon">🕯️</div>
+        <div class="treatment-name">Head & Scalp</div>
+        <div class="treatment-name-ja">ヘッドスパ＆頭皮ケア</div>
+        <div class="treatment-desc">アロマオイルを用いた頭皮マッサージ。目の疲れ・肩こりの緩和と、育毛効果も期待できます。</div>
+        <div class="treatment-price">¥10,000<span class="treatment-price-unit">tax incl.</span></div>
+        <div class="treatment-duration">⏱ 60 min</div>
+      </div>
+      <div class="treatment-card reveal">
+        <div class="treatment-num">06</div>
+        <div class="treatment-icon">👁️</div>
+        <div class="treatment-name">Eye Premium</div>
+        <div class="treatment-name-ja">プレミアムアイケア</div>
+        <div class="treatment-desc">目元の乾燥・くすみ・むくみをケア。温冷交互マッサージ＋美容液導入で目元印象を劇的に改善。</div>
+        <div class="treatment-price">¥8,000<span class="treatment-price-unit">tax incl.</span></div>
+        <div class="treatment-duration">⏱ 45 min</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRIDAL -->
+<section class="bridal-section" id="bridal">
+  <div class="bridal-inner">
+    <div class="bridal-lead reveal">
+      <div class="eyebrow" style="justify-content:center;">Bridal Plan</div>
+      <h2 class="section-title">一生に一度の輝きを、<br><span>共に叶えます。</span></h2>
+      <div class="ornament-divider"><div class="ornament-gem"></div></div>
+      <p class="body-text">結婚式の3〜6ヶ月前から始めるブライダルエステプランをご用意。ドレスアップした姿が最も美しく輝くよう、肌・フォルム・心を整えます。</p>
+    </div>
+    <div class="bridal-plans">
+      <div class="plan-card reveal">
+        <div class="plan-tier">Light</div>
+        <div class="plan-name">Pearl Plan</div>
+        <div class="plan-price">¥88,000</div>
+        <div class="plan-price-note">税込 / 全3回コース</div>
+        <ul class="plan-features">
+          <li>フェイシャル集中ケア ×3</li>
+          <li>毛穴・美白トリートメント</li>
+          <li>式前日の仕上げケア</li>
+          <li>ホームケアアドバイス</li>
+        </ul>
+        <a href="#reserve" class="btn-plan">このプランで予約</a>
+      </div>
+      <div class="plan-card featured reveal">
+        <div class="plan-tier">Standard</div>
+        <div class="plan-name">Diamond Plan</div>
+        <div class="plan-price">¥168,000</div>
+        <div class="plan-price-note">税込 / 全6回コース</div>
+        <ul class="plan-features">
+          <li>フェイシャル＋ボディ ×6</li>
+          <li>リフトアップ小顔ケア</li>
+          <li>デコルテ・二の腕集中</li>
+          <li>式前日 Special Ritual</li>
+          <li>ドレス試着同行サービス</li>
+        </ul>
+        <a href="#reserve" class="btn-plan">このプランで予約</a>
+      </div>
+      <div class="plan-card reveal">
+        <div class="plan-tier">Premium</div>
+        <div class="plan-name">Goddess Plan</div>
+        <div class="plan-price">¥298,000</div>
+        <div class="plan-price-note">税込 / 全12回コース</div>
+        <ul class="plan-features">
+          <li>全メニュー使い放題 ×12</li>
+          <li>専属エステティシャン</li>
+          <li>栄養・スキンケア相談</li>
+          <li>ヘッドスパ ×3 込み</li>
+          <li>式当日出張対応</li>
+        </ul>
+        <a href="#reserve" class="btn-plan">このプランで予約</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow-section">
+  <div class="flow-inner">
+    <div class="flow-header">
+      <div class="eyebrow reveal" style="justify-content:center;">How It Works</div>
+      <h2 class="section-title reveal" style="color:var(--ivory);">ご来店の流れ</h2>
+    </div>
+    <div class="flow-timeline">
+      <div class="flow-step left reveal">
+        <div class="flow-dot"></div>
+        <div class="flow-step-num">STEP 01</div>
+        <div class="flow-step-title">ご予約</div>
+        <p class="flow-step-desc">お電話・LINE・ウェブフォームからご予約。ブライダルプランはお早めに。</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-step right reveal" style="padding-top:5rem;">
+        <div class="flow-dot"></div>
+        <div class="flow-step-num">STEP 02</div>
+        <div class="flow-step-title">カウンセリング</div>
+        <p class="flow-step-desc">肌状態・お悩み・ご要望を丁寧にヒアリング。最適なコースをご提案します。</p>
+      </div>
+      <div class="flow-step left reveal" style="padding-top:2rem;">
+        <div class="flow-dot"></div>
+        <div class="flow-step-num">STEP 03</div>
+        <div class="flow-step-title">施術</div>
+        <p class="flow-step-desc">完全個室でリラックスいただきながら、プロの技術をお楽しみください。</p>
+      </div>
+      <div class="flow-line"></div>
+      <div class="flow-step right reveal" style="padding-top:7rem;">
+        <div class="flow-dot"></div>
+        <div class="flow-step-num">STEP 04</div>
+        <div class="flow-step-title">アフターケアご提案</div>
+        <p class="flow-step-desc">施術後のホームケアと、次回のプランについてご案内します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="testi-inner">
+    <div class="eyebrow reveal">Voice</div>
+    <h2 class="section-title reveal">お客様の声</h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">結婚式の3ヶ月前からDiamondプランでお世話になりました。式当日、旦那に「今まで見た中で一番綺麗」と言ってもらえて涙が出ました。肌の仕上がりに感動です。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Airi S.</div>
+            <div class="testi-info">29歳・ブライダルプラン利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">バリ島リトリートのような雰囲気で、来るたびに別世界に来たみたい。Royal Facialを月1で通っていますが、毛穴が本当に目立たなくなりました。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Mayuko T.</div>
+            <div class="testi-info">34歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="access-section" id="access">
+  <div class="reveal">
+    <div class="eyebrow" style="color:var(--gold);">Access</div>
+    <h2 class="section-title">アクセス</h2>
+    <div class="access-table">
+      <div class="access-row">
+        <div class="access-lbl">住所</div>
+        <div class="access-val">東京都渋谷区広尾5-XX-XX<br>プレミアムビル 4F（完全個室）</div>
+      </div>
+      <div class="access-row">
+        <div class="access-lbl">最寄駅</div>
+        <div class="access-val">広尾駅 1番出口より徒歩3分</div>
+      </div>
+      <div class="access-row">
+        <div class="access-lbl">営業時間</div>
+        <div class="access-val">10:00〜21:00（最終受付 19:00）</div>
+      </div>
+      <div class="access-row">
+        <div class="access-lbl">定休日</div>
+        <div class="access-val">毎週月曜日</div>
+      </div>
+      <div class="access-row">
+        <div class="access-lbl">Tel</div>
+        <div class="access-val">03-XXXX-XXXX</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="access-map">
+      <div class="map-pin-wrap">
+        <div class="map-pin-gold"></div>
+        <div class="map-label">DEWI SPA</div>
+      </div>
+    </div>
+    <p style="font-size:0.6rem;color:rgba(201,152,58,0.5);letter-spacing:0.15em;text-align:center;margin-top:1rem;font-family:'Cinzel',serif;">広尾駅より徒歩3分</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="reserve">
+  <div class="cta-ornament"></div>
+  <div class="cta-ornament cta-ornament-2"></div>
+  <div class="cta-ornament cta-ornament-3"></div>
+  <div class="cta-inner">
+    <p class="cta-kana reveal">特別なご予約・お問い合わせ</p>
+    <h2 class="cta-title reveal">あなたの<span>最高の輝き</span>を、<br>一緒に叶えましょう。</h2>
+    <p class="cta-text reveal">
+      ブライダルプランのご相談は<br>
+      式の6ヶ月前のご連絡を推奨しております。<br>
+      まずはお気軽にお問い合わせください。
+    </p>
+    <div class="cta-btns reveal">
+      <a href="#" class="btn-gold">オンライン予約</a>
+      <a href="#" class="btn-outline-gold">LINEで相談</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo-main">DEWI SPA</div>
+      <div class="footer-logo-sub">Bridal &amp; Facial Esthetic — Hiroo, Tokyo</div>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="#about">About</a></li>
+      <li><a href="#treatment">Treatment</a></li>
+      <li><a href="#bridal">Bridal</a></li>
+      <li><a href="#access">Access</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 DEWI SPA. All Rights Reserved.</div>
+    <div class="footer-sns">
+      <a href="#" class="sns-icon">IG</a>
+      <a href="#" class="sns-icon">LN</a>
+      <a href="#" class="sns-icon">☆</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+// HAMBURGER
+(function(){
+  var btn = document.getElementById('hamburger');
+  var menu = document.getElementById('mobile-menu');
+  if(!btn || !menu) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+  window.closeMenu = function(){
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+})();
+
+</body>
+</html>
