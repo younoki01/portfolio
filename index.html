@@ -40,36 +40,20 @@ body {
   mix-blend-mode: multiply;
 }
 #cur.link { width: 40px; height: 40px; background: rgba(17,17,16,.08); }
-#cur.work { width: 64px; height: 64px; background: rgba(17,17,16,.06); border-radius: 50%; }
+#cur
 
 /* ── PREVIEW ── */
-#pv {
-  position: fixed; pointer-events: none; z-index: 8000;
-  width: 360px; height: 220px;
-  opacity: 0; transform: translateY(8px) scale(.97);
-  transition: opacity .2s ease, transform .2s ease;
-  border-radius: 6px; overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 6px 20px rgba(0,0,0,.1), 0 20px 60px rgba(0,0,0,.08);
-}
+
 #pv.show { opacity: 1; transform: translateY(0) scale(1); }
 #pv-inner { width: 100%; height: 100%; }
-.pv-card {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: .3rem; position: relative; overflow: hidden;
-}
-.pv-bar {
-  position: absolute; top: 0; left: 0; right: 0; height: 26px;
-  background: rgba(0,0,0,.2);
-  display: flex; align-items: center; padding: 0 10px; gap: 5px;
-}
-.pv-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.2); }
-.pv-url { flex: 1; height: 12px; background: rgba(255,255,255,.1); border-radius: 2px; margin-left: 6px; }
-.pv-sub { font-family: 'DM Mono',monospace; font-size: .55rem; letter-spacing: .25em; text-transform: uppercase; opacity: .45; margin-top: .4rem; }
-.pv-ttl { font-family: 'Cormorant Garamond',serif; font-size: 1.7rem; font-weight: 400; letter-spacing: .06em; }
-.pv-lines { position: absolute; bottom: 1.2rem; left: 1.4rem; right: 1.4rem; display: flex; flex-direction: column; gap: 4px; }
-.pv-line { height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; }
+
+
+
+
+
+
+
+
 
 /* ── NAV ── */
 nav {
@@ -754,7 +738,7 @@ footer {
 <body>
 
 <div id="cur"></div>
-<div id="pv"><div id="pv-inner"></div></div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -844,32 +828,32 @@ footer {
   <div class="services-label reveal">
     <div class="eyebrow">Services</div>
     <h2 class="big-title">提供<br><em>サービス</em></h2>
-    <p>テンプレートを使わない、フルオリジナルのWeb制作。ジャンルや規模を問わず、最適なデザインを提案します。</p>
+    <p>テンプレートを使わない、フルオリジナルのWeb制作。中小企業の集客・問い合わせ獲得を全力でサポートします。</p>
   </div>
   <div class="services-list">
     <div class="service-row reveal">
       <div>
         <div class="srv-num">01</div>
-        <div class="srv-name">オリジナルデザイン</div>
-        <p class="srv-desc">HTML/CSSによるフルスクラッチ制作。他のどこにもないサイトを実現します。</p>
+        <div class="srv-name">Webページ制作</div>
+        <p class="srv-desc">HTML/CSSによるフルオリジナル制作。PC・スマホ完全対応。集客・問い合わせ獲得に特化した構成で仕上げます。</p>
       </div>
-      <div class="srv-price">¥49,800 —</div>
+      <div class="srv-price">¥20,000 —</div>
     </div>
     <div class="service-row reveal">
       <div>
         <div class="srv-num">02</div>
-        <div class="srv-name">WordPress 制作</div>
-        <p class="srv-desc">集客・SEO・自社更新を見据えたCMS構築。運用マニュアル付きで安心です。</p>
+        <div class="srv-name">コーポレートサイト制作</div>
+        <p class="srv-desc">会社の信頼感・採用力・営業力を高める本格的なコーポレートサイト。複数ページ構成に対応します。</p>
       </div>
-      <div class="srv-price">¥99,800 —</div>
+      <div class="srv-price">¥25,000 —</div>
     </div>
     <div class="service-row reveal">
       <div>
         <div class="srv-num">03</div>
-        <div class="srv-name">LP（ランディングページ）</div>
-        <p class="srv-desc">1ページで完結する高コンバージョンLP。キャンペーン・集客施策に最適です。</p>
+        <div class="srv-name">サイト修正・リニューアル</div>
+        <p class="srv-desc">既存サイトのデザイン改善・スマホ対応・表示速度改善など、部分修正から全面リニューアルまで対応します。</p>
       </div>
-      <div class="srv-price">¥29,800 —</div>
+      <div class="srv-price">要相談</div>
     </div>
   </div>
 </section>
@@ -1090,48 +1074,48 @@ footer {
   <div class="pricing-grid">
     <div class="plan reveal">
       <div class="plan-tier">Light</div>
-      <div class="plan-name">オリジナルデザイン</div>
-      <div class="plan-price">¥49,800</div>
-      <div class="plan-note">Tax incl. / HTML&CSS</div>
+      <div class="plan-name">ライトプラン</div>
+      <div class="plan-price">¥20,000</div>
+      <div class="plan-note">〜5セクション / 納期5日</div>
       <div class="plan-rule"></div>
       <ul class="plan-features">
-        <li>フルオリジナルデザイン</li>
-        <li>最大5ページ</li>
+        <li>1ページ制作</li>
         <li>レスポンシブ対応</li>
-        <li>お問い合わせフォーム</li>
-        <li>納期：10日〜</li>
+        <li>修正2回まで</li>
+        <li>フォームなし</li>
+        <li>納期：5日〜</li>
       </ul>
       <a href="#contact" class="plan-btn">相談する</a>
     </div>
     <div class="plan featured reveal">
       <div class="plan-tier">Standard</div>
-      <div class="plan-name">WordPress 制作</div>
-      <div class="plan-price">¥99,800</div>
-      <div class="plan-note">Tax incl. / CMS込み</div>
+      <div class="plan-name">スタンダードプラン</div>
+      <div class="plan-price">¥40,000</div>
+      <div class="plan-note">〜10セクション / 納期7日</div>
       <div class="plan-rule"></div>
       <ul class="plan-features">
-        <li>フルオリジナルデザイン</li>
-        <li>最大8ページ</li>
-        <li>WordPress導入・設定</li>
-        <li>SEO基本設定</li>
-        <li>更新マニュアル付き</li>
-        <li>納期：14日〜</li>
+        <li>1ページ制作</li>
+        <li>レスポンシブ対応</li>
+        <li>お問い合わせフォーム</li>
+        <li>Google Analytics設置</li>
+        <li>修正3回まで</li>
+        <li>納期：7日〜</li>
       </ul>
       <a href="#contact" class="plan-btn">相談する</a>
     </div>
     <div class="plan reveal">
       <div class="plan-tier">Premium</div>
-      <div class="plan-name">WordPress フルカスタム</div>
-      <div class="plan-price">¥149,800</div>
-      <div class="plan-note">Tax incl. / 完全対応</div>
+      <div class="plan-name">プレミアムプラン</div>
+      <div class="plan-price">¥70,000</div>
+      <div class="plan-note">複数ページ対応 / 納期14日</div>
       <div class="plan-rule"></div>
       <ul class="plan-features">
-        <li>最大12ページ</li>
+        <li>1〜3ページ制作</li>
         <li>リッチアニメーション</li>
-        <li>Google Analytics設定</li>
-        <li>SEO完全対応</li>
-        <li>1ヶ月運用サポート</li>
-        <li>納期：21日〜</li>
+        <li>お問い合わせフォーム</li>
+        <li>Google Analytics設置</li>
+        <li>修正5回まで</li>
+        <li>納期：14日〜</li>
       </ul>
       <a href="#contact" class="plan-btn">相談する</a>
     </div>
@@ -1149,7 +1133,7 @@ footer {
     <p class="cta-right-eyebrow">現在 受付中 — Available Now</p>
     <p class="cta-right-text">"予算がないからデザインを妥協する"<br>という選択肢をなくしたい。</p>
     <div class="cta-right-btns">
-      <a href="#" class="btn-inv">okokoナラで相談する →</a>
+      <a href="#contact" class="btn-inv">お問い合わせ・ご相談 →</a>
       <a href="#" class="btn-inv-ghost">実績をもっと見る</a>
     </div>
   </div>
@@ -1181,8 +1165,7 @@ footer {
   <div class="foot-cell">
     <div class="foot-label">Contact</div>
     <ul class="foot-links">
-      <li><a href="#">okokoナラ</a></li>
-      <li><a href="#">お問い合わせ</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
     </ul>
   </div>
 </footer>
@@ -1208,7 +1191,6 @@ let mx=0,my=0;
 document.addEventListener('mousemove', e=>{
   mx=e.clientX; my=e.clientY;
   cur.style.left=mx+'px'; cur.style.top=my+'px';
-  if(pvOn) posPv(e);
 });
 document.querySelectorAll('a,button,.tag,.kpi,.plan,.service-row,.process-step').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('link'));
@@ -1217,33 +1199,6 @@ document.querySelectorAll('a,button,.tag,.kpi,.plan,.service-row,.process-step')
 document.querySelectorAll('.work-item').forEach(el=>{
   el.addEventListener('mouseenter',()=>{ cur.classList.remove('link'); cur.classList.add('work'); });
   el.addEventListener('mouseleave',()=>cur.classList.remove('work'));
-});
-
-// PREVIEW
-const pv=document.getElementById('pv'), pvi=document.getElementById('pv-inner');
-let pvOn=false;
-function buildPv(el){
-  const bg=el.dataset.pb||'#eee', c=el.dataset.pc||'#fff',
-        sub=el.dataset.pl||'', nm=el.dataset.pn||'';
-  pvi.innerHTML=`<div class="pv-card" style="background:${bg};color:${c}">
-    <div class="pv-bar"><div class="pv-dot"></div><div class="pv-dot"></div><div class="pv-dot"></div><div class="pv-url"></div></div>
-    <div class="pv-sub">${sub}</div>
-    <div class="pv-ttl">${nm}</div>
-    <div class="pv-lines"><div class="pv-line" style="width:70%"></div><div class="pv-line" style="width:50%"></div><div class="pv-line" style="width:60%"></div></div>
-  </div>`;
-}
-function posPv(e){
-  const W=360,H=220,p=20,vw=window.innerWidth,vh=window.innerHeight;
-  let x=e.clientX+p, y=e.clientY-H/2;
-  if(x+W>vw-p) x=e.clientX-W-p;
-  if(y<p) y=p;
-  if(y+H>vh-p) y=vh-H-p;
-  pv.style.left=x+'px'; pv.style.top=y+'px';
-}
-document.querySelectorAll('.work-item[data-pb]').forEach(el=>{
-  el.addEventListener('mouseenter',e=>{ buildPv(el); pvOn=true; pv.classList.add('show'); posPv(e); });
-  el.addEventListener('mouseleave',()=>{ pvOn=false; pv.classList.remove('show'); });
-  el.addEventListener('mousemove',posPv);
 });
 
 // REVEAL

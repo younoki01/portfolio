@@ -25,7 +25,7 @@
   --red:     #d63020;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: hidden; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -465,7 +465,7 @@ footer { background: var(--navy2); }
 .foot-logo-w { display:flex; align-items:center; gap:.8rem; margin-bottom:1rem; }
 .foot-logo-mark-w { width:36px; height:36px; background:var(--blue); border-radius:3px; display:flex; align-items:center; justify-content:center; }
 .foot-logo-name-w { font-family:'Noto Sans JP',sans-serif; font-weight:700; font-size:.88rem; letter-spacing:.1em; color:var(--white); }
-.foot-tagline { font-size:.74rem; line-height:2; color:rgba(255,255,255,.3); letter-spacing:.04em; max-width:240px; }
+.foot-tagline { font-size:.74rem; line-height:2; color:rgba(255,255,255,.3); letter-spacing:.04em; max-width: 240px; }
 .foot-copy { font-family:'DM Mono',monospace; font-size:.48rem; letter-spacing:.14em; color:rgba(255,255,255,.18); margin-top:1rem; }
 .foot-label { font-family:'DM Mono',monospace; font-size:.48rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.22); margin-bottom:1.2rem; }
 .foot-links { list-style:none; display:flex; flex-direction:column; gap:.7rem; }
@@ -538,6 +538,27 @@ footer { background: var(--navy2); }
   .numbers-grid { grid-template-columns: 1fr 1fr; }
   .flow-steps { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 768px) {
+  .nav-top { display: none; }
+  .nav-main { padding: 0 1.2rem; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { padding: 3rem 1.5rem; }
+  .strength-label { padding: 3rem 1.5rem; }
+  .strength-intro { padding: 2.5rem 1.5rem; }
+  .services-header { padding: 3.5rem 1.5rem 2rem; }
+  .numbers-label { padding: 3rem 1.5rem; }
+  .flow-header { padding: 3.5rem 1.5rem 2rem; }
+  .flow-step { padding: 2rem 1.5rem; }
+  .company-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .company-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .recruit-banner { padding: 3rem 1.5rem; }
+  .cta-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .cta-right { padding: 2.5rem 1.5rem 3.5rem; }
+  .footer-top { padding: 2.5rem 1.5rem; }
+  .footer-bottom { padding: 1.2rem 1.5rem; }
 }
 </style>
 </head>

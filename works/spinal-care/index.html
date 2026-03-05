@@ -25,7 +25,7 @@
   --text-mid:    #4a5a70;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: hidden; }
 
 body {
   background: var(--white);
@@ -377,7 +377,7 @@ nav {
   padding: 8rem 5rem;
   background: var(--white);
 }
-.problem-inner { max-width: 1300px; margin: 0 auto; }
+.problem-inner{ max-max-width: 100%; width: 100%; margin: 0 auto; }
 .section-label {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.6rem;
@@ -468,7 +468,7 @@ nav {
     linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
   background-size: 60px 60px;
 }
-.features-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
+.features-inner{ max-max-width: 100%; width: 100%; margin: 0 auto; position: relative; z-index: 1; }
 .features-header {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 4rem; align-items: center;
@@ -1169,6 +1169,26 @@ footer {
   .trust-bar { grid-template-columns: 1fr; }
   .flow-steps { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .hero-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .trust-bar { padding: 1.2rem 1.5rem; }
+  .features-inner { padding: 0 1.5rem 3rem; }
+  .problem-inner { padding: 0 1.5rem; width: 100%; }
+  .section-lead { max-width: 100%; }
+  .hero-desc { max-width: 100%; }
+  .hero-visual-card { max-width: 100%; width: 100%; }
+  .menu-inner { padding: 0 1.5rem 3rem; }
+  .staff-inner { padding: 0 1.5rem 3rem; }
+  .voice-inner { padding: 0 1.5rem 3rem; }
+  .flow-inner { padding: 0 1.5rem 3rem; }
+  .access-section { padding: 4rem 1.5rem; }
+  .cta-inner { padding: 4rem 1.5rem; }
+  .footer-top { padding: 2.5rem 1.5rem; }
+  .footer-bottom { padding: 1.2rem 1.5rem; }
 }
 </style>
 </head>

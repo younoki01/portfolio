@@ -21,7 +21,7 @@
   --hover:  #f2f2f0;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: hidden; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -621,6 +621,21 @@ footer {
   .hero-h1 { font-size: clamp(2.8rem, 16vw, 4.5rem); }
   .schedule-grid { grid-template-columns: repeat(3,1fr); }
   footer { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { padding: 3rem 1.5rem; }
+  .features-label { padding: 3.5rem 1.5rem 2.5rem; }
+  .program-header { padding: 3.5rem 1.5rem 2rem; }
+  .schedule-header { padding: 3.5rem 1.5rem 2rem; }
+  .schedule-section { padding: 3.5rem 1.5rem 4rem; }
+  .pricing-header { padding: 3.5rem 1.5rem 2rem; }
+  .cta-left { padding: 4rem 1.5rem 3rem; }
+  .cta-right { padding: 3rem 1.5rem 4rem; }
+  footer { padding: 2.5rem 1.5rem; }
 }
 </style>
 </head>

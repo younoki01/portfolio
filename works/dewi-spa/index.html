@@ -25,7 +25,7 @@
   --text-light:  #a0806a;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--ivory);
@@ -1087,37 +1087,33 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   nav { padding: 0 2rem; }
-  .hero-title { font-size: clamp(3.5rem, 10vw, 7rem); }
+  .about-section { grid-template-columns: 1fr; }
   .treatment-grid { grid-template-columns: repeat(2,1fr); }
+  .bridal-plans { grid-template-columns: 1fr; }
+  .flow-timeline { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: repeat(2,1fr); }
-  .about-section .about-content { flex-direction: column; }
-  .flow-timeline { flex-direction: column; align-items: flex-start; }
-  .bridal-inner { flex-direction: column; }
-  .access-section .access-table { width: 100%; }
-  .cta-inner { padding: 5rem 2rem; }
-  .footer-top { flex-direction: column; gap: 2rem; padding: 3rem 2rem; }
+  .access-section { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   nav { padding: 0 1.2rem; height: 56px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: block; top: 56px; }
+  .hero { padding-top: 56px; }
+  .hero-content { padding: 3.5rem 1.5rem; }
   .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
   .treatment-grid { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: 1fr; }
-  .treatment-inner { padding: 0 1.5rem 3rem; }
   .about-section { padding: 4rem 1.5rem; }
-  .flow-inner { padding: 0 1.5rem 3rem; }
   .access-section { padding: 4rem 1.5rem; }
-  .cta-inner { padding: 4rem 1.5rem; }
-  .footer-top { padding: 3rem 1.5rem; }
-  .footer-bottom { padding: 1.5rem 1.5rem; }
+  .cta-section { padding: 4rem 1.5rem; }
+  .footer-top { padding: 3rem 1.5rem; flex-direction: column; gap: 2rem; }
+  .footer-bottom { padding: 1.2rem 1.5rem; }
 }
 @media (max-width: 480px) {
   .hero-title { font-size: clamp(2.8rem, 14vw, 4rem); }
   .section-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
   .cta-inner { padding: 3rem 1.2rem; }
-  .footer-nav { flex-direction: column; }
 }
 </style>
 </head>
