@@ -733,6 +733,109 @@ footer {
   footer { grid-template-columns: 1fr; }
   .foot-cell { padding: 1.8rem 1.2rem; }
 }
+
+/* ── CONTACT MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(17,17,16,.6);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease;
+}
+.modal-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+.modal {
+  background: var(--white);
+  width: min(560px, calc(100vw - 2rem));
+  max-height: 90vh; overflow-y: auto;
+  padding: 3rem;
+  position: relative;
+  transform: translateY(24px) scale(.97);
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
+}
+.modal-overlay.open .modal {
+  transform: translateY(0) scale(1);
+}
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.4rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.4rem; color: var(--ink3); line-height: 1;
+  transition: color .2s, transform .2s;
+}
+.modal-close:hover { color: var(--ink); transform: rotate(90deg); }
+.modal-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .6rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: .8rem;
+}
+.modal-title {
+  font-size: 1.6rem; font-weight: 700; color: var(--ink);
+  line-height: 1.2; margin-bottom: .5rem;
+}
+.modal-sub {
+  font-size: .82rem; color: var(--ink3); margin-bottom: 2rem;
+  line-height: 1.6;
+}
+.modal-rule {
+  height: 1px; background: var(--rule); margin-bottom: 2rem;
+}
+.form-group {
+  margin-bottom: 1.4rem;
+}
+.form-label {
+  display: block; font-size: .72rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink2); margin-bottom: .5rem;
+}
+.form-label span { color: #c0392b; margin-left: .2rem; }
+.form-input, .form-textarea {
+  width: 100%; box-sizing: border-box;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  padding: .75rem 1rem; font-size: .9rem;
+  color: var(--ink); font-family: inherit;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--ink); background: var(--white);
+}
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  width: 100%; padding: 1rem;
+  background: var(--ink); color: var(--white);
+  border: none; font-family: 'DM Mono', monospace;
+  font-size: .72rem; letter-spacing: .15em;
+  text-transform: uppercase; cursor: pointer;
+  transition: background .2s, transform .1s;
+  margin-top: .5rem;
+}
+.form-submit:hover { background: #333; }
+.form-submit:active { transform: scale(.99); }
+.form-submit:disabled { background: var(--ink3); cursor: not-allowed; }
+.form-note {
+  font-size: .75rem; color: var(--ink3);
+  text-align: center; margin-top: 1rem; line-height: 1.5;
+}
+.form-success {
+  text-align: center; padding: 2rem 0;
+  display: none;
+}
+.form-success-icon {
+  font-size: 2.5rem; margin-bottom: 1rem;
+}
+.form-success-title {
+  font-size: 1.2rem; font-weight: 700; color: var(--ink);
+  margin-bottom: .5rem;
+}
+.form-success-text {
+  font-size: .85rem; color: var(--ink3); line-height: 1.6;
+}
+@media (max-width: 480px) {
+  .modal { padding: 2rem 1.5rem; }
+}
 </style>
 </head>
 <body>
@@ -748,7 +851,7 @@ footer {
     <li><a href="#about">About</a></li>
     <li><a href="#pricing">Pricing</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Contact</a>
+  <a href="#contact" class="nav-cta open-modal">Contact</a>
   <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
     <span></span><span></span><span></span>
   </button>
@@ -1085,7 +1188,7 @@ footer {
         <li>フォームなし</li>
         <li>納期：5日〜</li>
       </ul>
-      <a href="#contact" class="plan-btn">相談する</a>
+      <a href="#contact" class="plan-btn open-modal">相談する</a>
     </div>
     <div class="plan featured reveal">
       <div class="plan-tier">Standard</div>
@@ -1101,7 +1204,7 @@ footer {
         <li>修正3回まで</li>
         <li>納期：7日〜</li>
       </ul>
-      <a href="#contact" class="plan-btn">相談する</a>
+      <a href="#contact" class="plan-btn open-modal">相談する</a>
     </div>
     <div class="plan reveal">
       <div class="plan-tier">Premium</div>
@@ -1117,7 +1220,7 @@ footer {
         <li>修正5回まで</li>
         <li>納期：14日〜</li>
       </ul>
-      <a href="#contact" class="plan-btn">相談する</a>
+      <a href="#contact" class="plan-btn open-modal">相談する</a>
     </div>
   </div>
 </section>
@@ -1133,7 +1236,7 @@ footer {
     <p class="cta-right-eyebrow">現在 受付中 — Available Now</p>
     <p class="cta-right-text">"予算がないからデザインを妥協する"<br>という選択肢をなくしたい。</p>
     <div class="cta-right-btns">
-      <a href="#contact" class="btn-inv">お問い合わせ・ご相談 →</a>
+      <a href="#contact" class="btn-inv open-modal">お問い合わせ・ご相談 →</a>
       <a href="#" class="btn-inv-ghost">実績をもっと見る</a>
     </div>
   </div>
@@ -1207,5 +1310,89 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.07});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
+
+// CONTACT MODAL
+const modal = document.getElementById('contactModal');
+const modalClose = document.getElementById('modalClose');
+const contactForm = document.getElementById('contactForm');
+const formSuccess = document.getElementById('formSuccess');
+const submitBtn = document.getElementById('submitBtn');
+
+function openModal() {
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// モーダルを開くトリガー（.open-modal クラスを持つ全要素）
+document.querySelectorAll('.open-modal').forEach(el => {
+  el.addEventListener('click', e => { e.preventDefault(); openModal(); });
+});
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// フォーム送信
+contactForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = '送信中...';
+  try {
+    const res = await fetch(contactForm.action, {
+      method: 'POST',
+      body: new FormData(contactForm),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      contactForm.style.display = 'none';
+      formSuccess.style.display = 'block';
+    } else {
+      alert('送信に失敗しました。時間をおいて再度お試しください。');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する →';
+    }
+  } catch {
+    alert('通信エラーが発生しました。');
+    submitBtn.disabled = false;
+    submitBtn.textContent = '送信する →';
+  }
+});
+>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="閉じる">✕</button>
+    <div class="modal-eyebrow">Contact</div>
+    <h2 class="modal-title">お問い合わせ</h2>
+    <p class="modal-sub">ヒアリング・お見積もりは完全無料です。<br>お気軽にご連絡ください。通常1〜2営業日以内にご返信します。</p>
+    <div class="modal-rule"></div>
+    <form id="contactForm" action="https://formspree.io/f/xykngkrl" method="POST">
+      <div class="form-group">
+        <label class="form-label" for="name">お名前<span>*</span></label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="山田 太郎" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">メールアドレス<span>*</span></label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">お問い合わせ内容<span>*</span></label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="ご依頼の内容・ご質問などをお書きください。" required></textarea>
+      </div>
+      <button class="form-submit" type="submit" id="submitBtn">送信する →</button>
+      <p class="form-note">送信後、確認メールが届きます。</p>
+    </form>
+    <div class="form-success" id="formSuccess">
+      <div class="form-success-icon">✓</div>
+      <div class="form-success-title">送信が完了しました</div>
+      <p class="form-success-text">お問い合わせありがとうございます。<br>1〜2営業日以内にご返信いたします。</p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
