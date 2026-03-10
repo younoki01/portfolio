@@ -945,8 +945,8 @@ footer {
     <div class="service-row reveal">
       <div>
         <div class="srv-num">02</div>
-        <div class="srv-name">コーポレートサイト制作</div>
-        <p class="srv-desc">会社の信頼感・採用力・営業力を高める本格的なコーポレートサイト。複数ページ構成に対応します。</p>
+        <div class="srv-name">WordPress連携</div>
+        <p class="srv-desc">WordPressへの組み込み・CMS構築に対応。自社で更新・管理できるサイトを実現します。</p>
       </div>
       <div class="srv-price">¥25,000 —</div>
     </div>
@@ -1311,6 +1311,7 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 // CONTACT MODAL
+document.addEventListener('DOMContentLoaded', function() {
 const modal = document.getElementById('contactModal');
 const modalClose = document.getElementById('modalClose');
 const contactForm = document.getElementById('contactForm');
@@ -1357,6 +1358,7 @@ contactForm.addEventListener('submit', async e => {
     submitBtn.textContent = '送信する →';
   }
 });
+}); // DOMContentLoaded
 </script>
 
 </body>

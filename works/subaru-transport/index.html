@@ -560,6 +560,67 @@ footer { background: var(--navy2); }
   .footer-top { padding: 2.5rem 1.5rem; }
   .footer-bottom { padding: 1.2rem 1.5rem; }
 }
+
+@media (max-width: 768px) {
+  /* ヘッダーお問い合わせボタン改行防止 */
+  .nav-cta {
+    font-size: .65rem;
+    padding: .45rem 1rem;
+    white-space: nowrap;
+  }
+
+  /* アイコン削除（fs-icon） */
+  .fs-icon { display: none; }
+
+  /* flow-step レイアウト改善 */
+  .flow-step {
+    padding: 1.5rem 1.2rem;
+    font-size: .85rem;
+  }
+  .fs-title { font-size: 1rem; }
+  .fs-desc { font-size: .82rem; line-height: 1.6; }
+
+  /* numbers-grid 視認性改善 */
+  .numbers-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  .num-val {
+    font-size: 2rem;
+  }
+  .num-unit { font-size: 1rem; }
+  .num-label { font-size: .78rem; }
+  .num-sub { font-size: .72rem; }
+
+  /* 会社情報セクション画像・テキスト切れ修正 */
+  .company-left { overflow: hidden; }
+  .company-img { max-width: 100%; overflow: hidden; }
+  .company-img-bg { max-width: 100%; }
+  .company-table { width: 100%; table-layout: fixed; word-break: break-word; }
+  .company-table td { max-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+  /* テキスト全般の右端切れ修正 */
+  .hero-lead, .strength-header p, .numbers-title,
+  .flow-header p, .recruit-banner p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  /* 全体フォントサイズ底上げ */
+  p { font-size: .88rem; line-height: 1.7; }
+  .section-label { font-size: .65rem; }
+}
+
+@media (max-width: 480px) {
+  /* 数字グリッドを1列に */
+  .numbers-grid { grid-template-columns: 1fr 1fr; }
+  .num-val { font-size: 1.8rem; }
+
+  /* フロー縦並び */
+  .flow-steps { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
