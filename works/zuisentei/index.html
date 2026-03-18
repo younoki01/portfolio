@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>瑞泉亭 ZUISENTEI — 温泉旅館</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --gold: #b8965a;
+    --gold-light: #d4b07a;
+    --cream: #f7f3ed;
+    --warm-white: #faf8f5;
+    --stone: #8a8278;
+    --mist: #e8e2d9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Serif JP', serif;
+    background: var(--warm-white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(250,248,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .logo-ja {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--ink);
+  }
+
+  .logo-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--stone);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-reserve {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--warm-white);
+    background: var(--ink);
+    padding: 0.6rem 1.4rem;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .nav-reserve:hover { background: var(--gold); }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 4rem 4rem 6rem;
+    position: relative;
+  }
+
+  .hero-season {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title-ja {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    writing-mode: horizontal-tb;
+  }
+
+  .hero-title-ja span {
+    display: block;
+    font-weight: 700;
+  }
+
+  .hero-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 2.5rem 0;
+  }
+
+  .hero-desc {
+    font-size: 0.85rem;
+    line-height: 2.2;
+    color: var(--stone);
+    letter-spacing: 0.1em;
+    max-width: 320px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--ink);
+    transition: gap 0.3s;
+  }
+
+  .hero-cta::after {
+    content: '→';
+    color: var(--gold);
+  }
+
+  .hero-cta:hover { gap: 1.5rem; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    background: url('images/3.jpg') center center / cover no-repeat;
+    position: relative;
+  }
+
+  .hero-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 60%, rgba(184,150,90,0.1) 0%, transparent 60%),
+      rgba(20,25,20,0.25);
+  }
+
+  /* 和の装飾 */
+  .kamon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    opacity: 0.15;
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    background: rgba(250,248,245,0.95);
+    padding: 1.2rem 1.8rem;
+    border-left: 3px solid var(--gold);
+  }
+
+  .hero-badge-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--stone);
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-badge-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--ink);
+  }
+
+  /* CONCEPT */
+  .concept {
+    padding: 8rem 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .concept-text .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .concept-text h2 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+  }
+
+  .concept-text p {
+    font-size: 0.85rem;
+    line-height: 2.4;
+    color: var(--stone);
+    letter-spacing: 0.08em;
+  }
+
+  .concept-visual {
+    position: relative;
+    height: 500px;
+  }
+
+  .concept-img-main {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80%;
+    height: 75%;
+    background: url('images/4823490_m.jpg') center center / cover no-repeat;
+    border-radius: 2px;
+  }
+
+  .concept-img-sub {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 55%;
+    height: 50%;
+    background: url('images/25517534_m.jpg') center center / cover no-repeat;
+    border: 6px solid var(--warm-white);
+    border-radius: 2px;
+  }
+
+  /* ROOMS */
+  .rooms {
+    background: var(--cream);
+    padding: 7rem 6rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+  }
+
+  .section-header-left .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-header-left h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+  }
+
+  .section-link {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--stone);
+    text-decoration: none;
+    border-bottom: 1px solid var(--mist);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .section-link:hover { color: var(--gold); border-color: var(--gold); }
+
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .room-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .room-card:first-child { grid-row: span 2; }
+
+  .room-img {
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    transition: transform 0.6s ease;
+  }
+
+  .room-card:first-child .room-img { min-height: 460px; }
+
+  .room-card:hover .room-img { transform: scale(1.05); }
+
+  .room-img-1 { background: url('images/27910319_m.jpg') center center / cover no-repeat; }
+  .room-img-2 { background: url('images/25330328.jpg') center center / cover no-repeat; }
+  .room-img-3 { background: url('images/22403379_m.jpg') center center / cover no-repeat; }
+
+  .room-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(26,26,24,0.85) 0%, transparent 100%);
+    color: var(--warm-white);
+  }
+
+  .room-type {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold-light);
+    margin-bottom: 0.4rem;
+  }
+
+  .room-name {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.3rem;
+  }
+
+  .room-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* EXPERIENCE */
+  .experience {
+    padding: 8rem 6rem;
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+
+  .exp-item {
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid var(--mist);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .exp-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+
+  .exp-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1.5rem;
+    opacity: 0.4;
+  }
+
+  .exp-item h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+
+  .exp-item p {
+    font-size: 0.8rem;
+    line-height: 2;
+    color: var(--stone);
+    letter-spacing: 0.05em;
+  }
+
+  /* ACCESS */
+  .access {
+    background: var(--ink);
+    color: var(--warm-white);
+    padding: 7rem 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .access h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-bottom: 3rem;
+    color: var(--warm-white);
+  }
+
+  .access-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .access-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1.5rem;
+  }
+
+  .access-label {
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+
+  .access-value { color: rgba(255,255,255,0.8); }
+
+  .access-map {
+    height: 360px;
+    background: linear-gradient(135deg, #2a3525 0%, #1a2520 50%, #0f1a10 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+  }
+
+  /* RESERVE */
+  .reserve {
+    padding: 7rem 6rem;
+    text-align: center;
+    background: var(--cream);
+  }
+
+  .reserve .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .reserve h2 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+  }
+
+  .reserve p {
+    font-size: 0.82rem;
+    line-height: 2.2;
+    color: var(--stone);
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+  }
+
+  .btn-reserve {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--warm-white);
+    padding: 1.1rem 3.5rem;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    transition: background 0.3s;
+    margin-right: 1rem;
+  }
+
+  .btn-reserve:hover { background: var(--gold); }
+
+  .btn-tel {
+    display: inline-block;
+    color: var(--ink);
+    padding: 1.1rem 2rem;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--mist);
+    transition: border-color 0.3s;
+  }
+
+  .btn-tel:hover { border-color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    padding: 3rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+
+  footer .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--warm-white);
+    letter-spacing: 0.3em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-season { animation: fadeInUp 0.8s ease both; }
+  .hero-title-ja { animation: fadeInUp 0.8s 0.2s ease both; }
+  .hero-divider { animation: fadeInUp 0.8s 0.4s ease both; }
+  .hero-desc { animation: fadeInUp 0.8s 0.6s ease both; }
+  .hero-cta { animation: fadeInUp 0.8s 0.8s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    /* NAV */
+    nav { padding: 1rem 1.5rem; height: 60px; }
+    .nav-links { display: none; }
+    .nav-reserve { font-size: 0.65rem; padding: 0.5rem 1rem; }
+
+    /* HERO */
+    .hero { grid-template-columns: 1fr; height: auto; min-height: 100vh; padding-top: 60px; }
+    .hero-left { padding: 3rem 1.5rem 2rem; order: 2; }
+    .hero-right { order: 1; height: 55vw; min-height: 200px; }
+    .hero-title-ja { font-size: 2rem; }
+    .hero-desc { font-size: 0.8rem; }
+
+    /* CONCEPT */
+    .concept { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+    .concept-visual { height: 280px; }
+    .concept-img-main { width: 75%; height: 70%; }
+    .concept-img-sub { width: 50%; height: 48%; }
+
+    /* ROOMS */
+    .rooms { padding: 4rem 1.5rem; }
+    .rooms-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .room-card:first-child { grid-row: span 1; }
+    .room-img { min-height: 240px !important; }
+
+    /* EXPERIENCE */
+    .experience { padding: 4rem 1.5rem; }
+    .experience-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .exp-item { padding: 2rem 1.5rem; }
+
+    /* ACCESS */
+    .access { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem; }
+    .access h2 { margin-bottom: 2rem; }
+
+    /* RESERVE */
+    .reserve { padding: 4rem 1.5rem; }
+    .reserve h2 { font-size: 1.6rem; letter-spacing: 0.15em; }
+    .btn-reserve, .btn-tel {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 0 0 0.8rem 0;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    /* SECTION HEADER */
+    .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+    /* FOOTER */
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <span class="logo-ja">瑞泉亭</span>
+    <span class="logo-en">ZUISENTEI</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#rooms">お部屋</a></li>
+    <li><a href="#experience">お愉しみ</a></li>
+    <li><a href="#access">アクセス</a></li>
+    <li><a href="#reserve">ご予約</a></li>
+  </ul>
+  <a href="#reserve" class="nav-reserve">予約する</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-season">Spring · 2026</p>
+    <h1 class="hero-title-ja">
+      山の静寂と<br>
+      <span>湯の恵みに</span><br>
+      包まれる宿。
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      標高千メートルの高原に佇む温泉宿。<br>
+      四季折々の自然と、受け継がれてきた<br>
+      もてなしの心をご堪能ください。
+    </p>
+    <a href="#rooms" class="hero-cta">お部屋を見る</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img">
+      <svg class="kamon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="95" stroke="white" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="75" stroke="white" stroke-width="1"/>
+        <circle cx="100" cy="100" r="55" stroke="white" stroke-width="1"/>
+        <line x1="100" y1="5" x2="100" y2="195" stroke="white" stroke-width="0.8"/>
+        <line x1="5" y1="100" x2="195" y2="100" stroke="white" stroke-width="0.8"/>
+        <line x1="33" y1="33" x2="167" y2="167" stroke="white" stroke-width="0.8"/>
+        <line x1="167" y1="33" x2="33" y2="167" stroke="white" stroke-width="0.8"/>
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <p class="hero-badge-label">OPEN SINCE</p>
+      <p class="hero-badge-value">1948</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept" id="about">
+  <div class="concept-text">
+    <p class="section-label">Our Philosophy</p>
+    <h2>時を忘れる<br>くつろぎを。</h2>
+    <p>
+      瑞泉亭は、創業より七十余年、山の温泉地に寄り添って参りました。<br><br>
+      地元の旬の食材を活かした会席料理、源泉かけ流しの天然温泉、そして四季の移ろいを映す日本庭園。<br><br>
+      忙しい日常から離れ、ただゆったりと流れる時間の中で、本来の自分に戻っていただける場所でありたいと願っております。
+    </p>
+  </div>
+  <div class="concept-visual">
+    <div class="concept-img-main"></div>
+    <div class="concept-img-sub"></div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="rooms" id="rooms">
+  <div class="section-header">
+    <div class="section-header-left">
+      <p class="section-label">Accommodations</p>
+      <h2>お部屋</h2>
+    </div>
+    <a href="#" class="section-link">すべて見る →</a>
+  </div>
+
+  <div class="rooms-grid">
+    <div class="room-card">
+      <div class="room-img room-img-1"></div>
+      <div class="room-info">
+        <p class="room-type">SUITE</p>
+        <p class="room-name">露天風呂付き特別室「翠峰」</p>
+        <p class="room-price">¥ 68,000〜 / 1名・1泊（2名利用）</p>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-img room-img-2"></div>
+      <div class="room-info">
+        <p class="room-type">DELUXE</p>
+        <p class="room-name">和洋室「桜花」</p>
+        <p class="room-price">¥ 38,000〜 / 1名・1泊</p>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-img room-img-3"></div>
+      <div class="room-info">
+        <p class="room-type">STANDARD</p>
+        <p class="room-name">和室「清流」</p>
+        <p class="room-price">¥ 24,000〜 / 1名・1泊</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-header">
+    <div class="section-header-left">
+      <p class="section-label">Experience</p>
+      <h2>お愉しみ</h2>
+    </div>
+  </div>
+
+  <div class="experience-grid">
+    <div class="exp-item">
+      <svg class="exp-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="28" r="14" stroke="#1a1a18" stroke-width="1.5"/>
+        <path d="M12 20 C12 12 36 12 36 20" stroke="#1a1a18" stroke-width="1.5" fill="none"/>
+        <path d="M18 12 C18 8 24 6 24 10" stroke="#1a1a18" stroke-width="1.5" fill="none"/>
+      </svg>
+      <h3>源泉かけ流し温泉</h3>
+      <p>
+        自家源泉より湧き出る単純硫黄泉。<br>
+        大浴場、露天風呂、貸切風呂の三種をご用意しております。
+      </p>
+    </div>
+    <div class="exp-item">
+      <svg class="exp-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="16" width="32" height="22" rx="1" stroke="#1a1a18" stroke-width="1.5"/>
+        <path d="M16 16V12M32 16V12" stroke="#1a1a18" stroke-width="1.5"/>
+        <circle cx="18" cy="26" r="2" fill="#1a1a18"/>
+        <circle cx="24" cy="26" r="2" fill="#1a1a18"/>
+        <circle cx="30" cy="26" r="2" fill="#1a1a18"/>
+      </svg>
+      <h3>山の会席料理</h3>
+      <p>
+        地元農家と連携した旬の食材を、<br>
+        伝統の技と現代の感性で仕上げる季節の会席。
+      </p>
+    </div>
+    <div class="exp-item">
+      <svg class="exp-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 8 C24 8 10 20 10 30 C10 38 16 44 24 44 C32 44 38 38 38 30 C38 20 24 8 24 8Z" stroke="#1a1a18" stroke-width="1.5" fill="none"/>
+        <path d="M18 36 C20 32 28 32 30 36" stroke="#1a1a18" stroke-width="1.5" fill="none"/>
+      </svg>
+      <h3>日本庭園の散策</h3>
+      <p>
+        四季折々の表情を見せる回遊式庭園。<br>
+        春の桜、秋の紅葉、冬の雪景色をお楽しみください。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="access" id="access">
+  <div>
+    <h2>アクセス</h2>
+    <div class="access-info">
+      <div class="access-row">
+        <span class="access-label">住所</span>
+        <span class="access-value">長野県〇〇郡〇〇町高原1-1<br>瑞泉亭</span>
+      </div>
+      <div class="access-row">
+        <span class="access-label">電車</span>
+        <span class="access-value">〇〇線「〇〇駅」よりバス25分<br>宿泊のお客様は送迎あり（要予約）</span>
+      </div>
+      <div class="access-row">
+        <span class="access-label">お車</span>
+        <span class="access-value">〇〇IC より車で20分<br>無料駐車場50台</span>
+      </div>
+      <div class="access-row">
+        <span class="access-label">電話</span>
+        <span class="access-value">0265-00-0000<br>受付時間 9:00〜20:00</span>
+      </div>
+    </div>
+  </div>
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.531646193365!2d139.7941716619329!3d35.71314137246262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ec1a4463df1%3A0x6c0d289a8292810d!2z5rWF6I2J5a-6!5e0!3m2!1sja!2sjp!4v1773838371655!5m2!1sja!2sjp"
+    style="width:100%;height:360px;border:0;filter:grayscale(20%);"
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <p class="section-label">Reservation</p>
+  <h2>ご予約</h2>
+  <p>
+    ご予約はオンライン・お電話にて承っております。<br>
+    特別なご要望やアレルギーのある方はお気軽にご相談ください。
+  </p>
+  <a href="#" class="btn-reserve">オンライン予約</a>
+  <a href="tel:026500000" class="btn-tel">☎ 0265-00-0000</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">瑞泉亭 ZUISENTEI</span>
+  <span>© 2024 瑞泉亭. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
