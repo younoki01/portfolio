@@ -18,7 +18,7 @@
     --gray-light: #e8e6e1;
   }
 
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--white);
@@ -823,38 +823,31 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   nav { padding: 0 2rem; }
-  .nav-links { gap: 1.5rem; }
-  .hero { grid-template-columns: 1fr; }
-  .hero-left { padding: 5rem 2rem 3rem; }
-  .hero-right { border-left: none; border-top: 1px solid rgba(201,169,110,.15); padding: 2rem 2rem 3rem; }
+  .hero { flex-direction: column; }
+  .hero-left, .hero-right { width: 100%; }
+  .hero-right { border-left: none; border-top: 1px solid rgba(201,169,110,.15); }
   .hero-title { font-size: clamp(3.5rem, 10vw, 7rem); }
-  .concept { grid-template-columns: 1fr; }
-  .concept-content { padding: 3rem 2rem; }
-  .philosophy { grid-template-columns: 1fr; }
   .menu-grid { grid-template-columns: repeat(2,1fr); }
   .stylist-grid { grid-template-columns: repeat(2,1fr); }
-  .access-section { grid-template-columns: 1fr; }
+  .access-section .access-inner { flex-direction: column; }
 }
 @media (max-width: 768px) {
   nav { padding: 0 1.2rem; height: 56px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: block; top: 56px; }
-  .hero { padding-top: 56px; }
-  .hero-left { padding: 3.5rem 1.5rem 2.5rem; }
   .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
-  .hero-right { padding: 2rem 1.5rem 3rem; }
-  .concept-content { padding: 2.5rem 1.5rem; }
   .menu-grid { grid-template-columns: 1fr; }
   .stylist-grid { grid-template-columns: 1fr; }
-  .access-section { padding: 4rem 1.5rem; }
-  .reserve-section { padding: 4rem 1.5rem; }
-  footer { padding: 2.5rem 1.5rem; }
+  .section-header { padding: 3.5rem 1.5rem 2rem; }
+  .menu-inner { padding: 0 1.5rem 3rem; }
+  .stylist-inner { padding: 0 1.5rem 3rem; }
+  .reserve-inner { padding: 4rem 1.5rem; }
 }
 @media (max-width: 480px) {
   .hero-title { font-size: clamp(2.5rem, 16vw, 4rem); }
   .section-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
-  .reserve-section { padding: 3rem 1.2rem; }
+  .reserve-inner { padding: 3rem 1.2rem; }
 }
 </style>
 </head>
