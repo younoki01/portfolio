@@ -25,7 +25,7 @@
   --text-light:  #a0806a;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--ivory);
@@ -777,18 +777,38 @@ nav {
   background: var(--ivory);
 }
 .testi-inner { max-width: 1400px; margin: 0 auto; }
-.testi-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+.testi-slider-wrap {
+  overflow: hidden;
   margin-top: 4rem;
+  position: relative;
+}
+.testi-slider-wrap::before,
+.testi-slider-wrap::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
+  pointer-events: none;
+}
+.testi-slider-wrap::before { left: 0; background: linear-gradient(to right, var(--ivory), transparent); }
+.testi-slider-wrap::after  { right: 0; background: linear-gradient(to left, var(--ivory), transparent); }
+.testi-grid {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: testi-scroll 40s linear infinite;
+}
+.testi-grid:hover { animation-play-state: paused; }
+@keyframes testi-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 .testi-card {
   background: var(--cream);
   border: 1px solid var(--ivory-dark);
-  padding: 3rem;
+  padding: 2.5rem;
   position: relative;
   transition: border-color 0.3s;
+  width: 340px;
+  flex-shrink: 0;
 }
 .testi-card:hover { border-color: rgba(201,152,58,0.3); }
 .testi-card::before {
@@ -1087,37 +1107,63 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   nav { padding: 0 2rem; }
-  .hero-title { font-size: clamp(3.5rem, 10vw, 7rem); }
+  .about-section { grid-template-columns: 1fr; }
   .treatment-grid { grid-template-columns: repeat(2,1fr); }
+  .bridal-plans { grid-template-columns: 1fr; }
+  .flow-timeline { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: repeat(2,1fr); }
-  .about-section .about-content { flex-direction: column; }
-  .flow-timeline { flex-direction: column; align-items: flex-start; }
-  .bridal-inner { flex-direction: column; }
-  .access-section .access-table { width: 100%; }
-  .cta-inner { padding: 5rem 2rem; }
-  .footer-top { flex-direction: column; gap: 2rem; padding: 3rem 2rem; }
+  .access-section { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   nav { padding: 0 1.2rem; height: 56px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: block; top: 56px; }
+  .hero { padding-top: 56px; }
+  .hero-content { padding: 3.5rem 1.5rem; }
   .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
   .treatment-grid { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: 1fr; }
-  .treatment-inner { padding: 0 1.5rem 3rem; }
   .about-section { padding: 4rem 1.5rem; }
-  .flow-inner { padding: 0 1.5rem 3rem; }
   .access-section { padding: 4rem 1.5rem; }
-  .cta-inner { padding: 4rem 1.5rem; }
-  .footer-top { padding: 3rem 1.5rem; }
-  .footer-bottom { padding: 1.5rem 1.5rem; }
+  .cta-section { padding: 4rem 1.5rem; }
+  .footer-top { padding: 3rem 1.5rem; flex-direction: column; gap: 2rem; }
+  .footer-bottom { padding: 1.2rem 1.5rem; }
 }
 @media (max-width: 480px) {
   .hero-title { font-size: clamp(2.8rem, 14vw, 4rem); }
   .section-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
   .cta-inner { padding: 3rem 1.2rem; }
-  .footer-nav { flex-direction: column; }
+}
+
+@media (max-width: 768px) {
+  .flow-section { padding: 5rem 1.5rem; }
+  .flow-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 1.5rem;
+    border-left: 1px solid rgba(201,152,58,0.4);
+    position: relative;
+  }
+  .flow-line { display: none; }
+  .flow-step {
+    grid-column: unset !important;
+    text-align: left !important;
+    padding: 0 0 2rem 1.5rem;
+    position: relative;
+  }
+  .flow-step[style*="padding-top"] { padding-top: 0 !important; }
+  .flow-step:last-child { padding-bottom: 0; }
+  .flow-dot {
+    left: -1.7rem !important;
+    right: auto !important;
+    top: 0.15rem;
+    width: 10px !important;
+    height: 10px !important;
+  }
+  .flow-step-title { font-size: .95rem; }
+  .flow-step-desc { font-size: .78rem; }
 }
 </style>
 </head>
@@ -1418,8 +1464,9 @@ footer {
   <div class="testi-inner">
     <div class="eyebrow reveal">Voice</div>
     <h2 class="section-title reveal">お客様の声</h2>
+    <div class="testi-slider-wrap">
     <div class="testi-grid">
-      <div class="testi-card reveal">
+      <div class="testi-card">
         <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
         <p class="testi-text">結婚式の3ヶ月前からDiamondプランでお世話になりました。式当日、旦那に「今まで見た中で一番綺麗」と言ってもらえて涙が出ました。肌の仕上がりに感動です。</p>
         <div class="testi-author">
@@ -1430,7 +1477,7 @@ footer {
           </div>
         </div>
       </div>
-      <div class="testi-card reveal">
+      <div class="testi-card">
         <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
         <p class="testi-text">バリ島リトリートのような雰囲気で、来るたびに別世界に来たみたい。Royal Facialを月1で通っていますが、毛穴が本当に目立たなくなりました。</p>
         <div class="testi-author">
@@ -1441,6 +1488,205 @@ footer {
           </div>
         </div>
       </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">40代に入って肌のくすみが気になり始めた頃に出会いました。3回通っただけで周りから「最近肌綺麗だね」と言われるように。本当に感謝しています。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">K</div>
+          <div>
+            <div class="testi-name">Keiko N.</div>
+            <div class="testi-info">42歳・フェイシャル利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">挙式6ヶ月前から通い始め、写真映りが格段に変わりました。カウンセリングも丁寧で、肌悩みを根本から改善してもらえた感じです。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">Y</div>
+          <div>
+            <div class="testi-name">Yuko H.</div>
+            <div class="testi-info">31歳・ブライダルプラン利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">他のエステと比べて施術の質が全然違います。フェイシャル後の翌朝の肌が本当にツルツルで、もう手放せません。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sachiko M.</div>
+            <div class="testi-info">38歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">友人の紹介で初めて訪問しました。施術中の心地よさと、翌日の肌の変化に驚きました。次回はコースで通いたいと思います。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rina O.</div>
+            <div class="testi-info">26歳・初回体験</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">乾燥肌で悩んでいましたが、数回通ううちにモチモチ肌になってきました。カウンセリングで肌に合ったケアを提案してもらえるのが嬉しいです。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">N</div>
+          <div>
+            <div class="testi-name">Natsumi K.</div>
+            <div class="testi-info">33歳・フェイシャル利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">50代を目前に肌のハリが気になっていましたが、施術後は10歳は若返った気分。スタッフの方もとても親切で居心地がいいです。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div>
+            <div class="testi-name">Tomoko A.</div>
+            <div class="testi-info">45歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">ブライダルエステを色々比較しましたが、ここが一番丁寧でした。当日の肌は今まで生きてきた中で一番綺麗だったと思います。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">H</div>
+          <div>
+            <div class="testi-name">Haruka I.</div>
+            <div class="testi-info">28歳・ブライダルプラン利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">毎月の楽しみになっています。施術後はリラックスして帰れるし、肌の調子も安定してきました。長く通い続けたいと思える場所です。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">E</div>
+          <div>
+            <div class="testi-name">Emi W.</div>
+            <div class="testi-info">36歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">結婚式の3ヶ月前からDiamondプランでお世話になりました。式当日、旦那に「今まで見た中で一番綺麗」と言ってもらえて涙が出ました。肌の仕上がりに感動です。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Airi S.</div>
+            <div class="testi-info">29歳・ブライダルプラン利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">バリ島リトリートのような雰囲気で、来るたびに別世界に来たみたい。Royal Facialを月1で通っていますが、毛穴が本当に目立たなくなりました。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Mayuko T.</div>
+            <div class="testi-info">34歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">40代に入って肌のくすみが気になり始めた頃に出会いました。3回通っただけで周りから「最近肌綺麗だね」と言われるように。本当に感謝しています。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">K</div>
+          <div>
+            <div class="testi-name">Keiko N.</div>
+            <div class="testi-info">42歳・フェイシャル利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">挙式6ヶ月前から通い始め、写真映りが格段に変わりました。カウンセリングも丁寧で、肌悩みを根本から改善してもらえた感じです。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">Y</div>
+          <div>
+            <div class="testi-name">Yuko H.</div>
+            <div class="testi-info">31歳・ブライダルプラン利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">他のエステと比べて施術の質が全然違います。フェイシャル後の翌朝の肌が本当にツルツルで、もう手放せません。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sachiko M.</div>
+            <div class="testi-info">38歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">友人の紹介で初めて訪問しました。施術中の心地よさと、翌日の肌の変化に驚きました。次回はコースで通いたいと思います。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rina O.</div>
+            <div class="testi-info">26歳・初回体験</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">乾燥肌で悩んでいましたが、数回通ううちにモチモチ肌になってきました。カウンセリングで肌に合ったケアを提案してもらえるのが嬉しいです。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">N</div>
+          <div>
+            <div class="testi-name">Natsumi K.</div>
+            <div class="testi-info">33歳・フェイシャル利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">50代を目前に肌のハリが気になっていましたが、施術後は10歳は若返った気分。スタッフの方もとても親切で居心地がいいです。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div>
+            <div class="testi-name">Tomoko A.</div>
+            <div class="testi-info">45歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">ブライダルエステを色々比較しましたが、ここが一番丁寧でした。当日の肌は今まで生きてきた中で一番綺麗だったと思います。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">H</div>
+          <div>
+            <div class="testi-name">Haruka I.</div>
+            <div class="testi-info">28歳・ブライダルプラン利用</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">毎月の楽しみになっています。施術後はリラックスして帰れるし、肌の調子も安定してきました。長く通い続けたいと思える場所です。</p>
+        <div class="testi-author">
+          <div class="testi-avatar">E</div>
+          <div>
+            <div class="testi-name">Emi W.</div>
+            <div class="testi-info">36歳・定期通い</div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1540,6 +1786,7 @@ const observer = new IntersectionObserver(entries => {
 reveals.forEach(el => observer.observe(el));
 </script>
 
+<script>
 // HAMBURGER
 (function(){
   var btn = document.getElementById('hamburger');
@@ -1556,6 +1803,7 @@ reveals.forEach(el => observer.observe(el));
     document.body.style.overflow = '';
   };
 })();
+</script>
 
 </body>
 </html>
