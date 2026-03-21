@@ -253,9 +253,9 @@ nav {
   color: var(--gold-light);
   text-decoration: none;
   font-family: 'Cinzel', serif;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: 0.25em;
-  padding: 1.1rem 2.2rem;
+  padding: 1.1rem 2.8rem;
   transition: border-color 0.3s, color 0.3s;
 }
 .btn-outline-gold:hover { border-color: var(--gold); color: var(--gold); }
@@ -390,7 +390,7 @@ nav {
 .about-corner-br { bottom: 1.5rem; right: 1.5rem; border-width: 0 1px 1px 0; }
 .about-badge {
   position: absolute;
-  top: -2rem; right: -2rem;
+  top: -1rem; right: 1rem;
   width: 100px; height: 100px;
   background: var(--gold);
   border-radius: 50%;
@@ -437,8 +437,12 @@ nav {
 }
 .section-title span { color: var(--gold); }
 .ornament-divider {
-  display: flex; align-items: center; gap: 1rem;
-  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  width: 100%;
 }
 .ornament-divider::before, .ornament-divider::after {
   content: ''; flex: 1; max-width: 40px;
@@ -599,7 +603,7 @@ nav {
   margin: 0 auto 6rem;
 }
 .bridal-lead .section-title { font-size: clamp(2.2rem, 3.5vw, 3.5rem); color: var(--ivory); }
-.bridal-lead .body-text { text-align: center; }
+.bridal-lead .body-text { text-align: center; color: rgba(245,233,200,0.8); }
 .bridal-plans {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1182,6 +1186,39 @@ footer {
   .footer-top { flex-direction: column; gap: 1.5rem; text-align: center; }
   .footer-nav { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
   .reserve-section { padding: 5rem 1.5rem; }
+}
+
+@media (max-width: 768px) {
+  /* ① hero-btnsボタン縦並び・サイズ統一 */
+  .hero-btns { flex-direction: column; align-items: center; gap: 1rem; }
+  .btn-gold, .btn-outline-gold { width: 100%; max-width: 260px; justify-content: center; }
+
+  /* ② about-visual overflow */
+  .about-visual { overflow: hidden; }
+  .about-badge { right: 0.5rem; top: -0.5rem; width: 80px; height: 80px; }
+
+  /* ③ treatment横余白 */
+  .treatment-section { padding: 5rem 1.5rem; }
+  .treatment-grid { grid-template-columns: 1fr; }
+  .treatment-card { padding: 2rem 1.5rem; }
+
+  /* ④ flow横余白 */
+  .flow-section { padding: 5rem 1.2rem; }
+
+  /* ⑤ bridal文字 */
+  .bridal-section { padding: 5rem 1.5rem; }
+  .bridal-lead { margin-bottom: 3rem; }
+  .section-title { word-break: keep-all; }
+
+  /* ⑥ access見やすく */
+  .access-section { padding: 4rem 1.5rem; }
+
+  /* ⑦ CTA ボタンサイズ統一 */
+  .cta-btns { flex-direction: column; align-items: center; gap: 1rem; }
+  .cta-btns .btn-gold, .cta-btns .btn-outline-gold { width: 100%; max-width: 280px; justify-content: center; }
+
+  /* ⑧ flow中央線（スマホは左端線のまま） */
+  .flow-timeline::before { display: none; }
 }
 </style>
 </head>
