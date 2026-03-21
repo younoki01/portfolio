@@ -210,10 +210,9 @@ nav {
   .hero-divider::before, .hero-divider::after { flex: 1; }
 }
 .hero-divider-line {
-  flex: 1; max-width: 60px;
+  flex: 1;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold));
-  flex: 1;
 }
 .hero-divider-line.right {
   background: linear-gradient(90deg, var(--gold), transparent);
@@ -1133,7 +1132,7 @@ footer {
   .nav-hamburger { display: flex; }
   .mobile-menu { display: block; top: 56px; }
   .hero { padding-top: 56px; }
-  .hero-content { padding: 3.5rem 1.5rem; }
+  .hero-content { padding: 2rem 1.5rem 2rem; }
   .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
   .treatment-grid { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: 1fr; }
@@ -1197,8 +1196,7 @@ footer {
 
 @media (max-width: 768px) {
   /* hero上部余白削減 */
-  .hero-content { padding: 3rem 1.5rem 3rem; }
-  .hero-ornament-top { top: 1rem; }
+  .hero-ornament-top { top: 0.5rem; }
   .hero-ornament-bottom { bottom: 1rem; }
   .hero-kana { margin-bottom: 1rem; }
   /* ① hero-btnsボタン縦並び・サイズ統一 */
