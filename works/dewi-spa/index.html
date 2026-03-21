@@ -720,25 +720,27 @@ nav {
 .flow-timeline {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 2px 1fr;
-  gap: 0 3rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
 }
-.flow-line {
-  grid-column: 2;
-  grid-row: 1 / -1;
+.flow-timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 1rem;
+  bottom: 1rem;
   width: 1px;
-  background: linear-gradient(to bottom, transparent 0%, var(--gold) 5%, var(--gold) 95%, transparent 100%);
-  margin: 0 auto;
-  position: relative;
-  align-self: stretch;
+  background: linear-gradient(to bottom, transparent 0%, var(--gold) 3%, var(--gold) 97%, transparent 100%);
+  transform: translateX(-50%);
 }
+.flow-line { display: none; }
 .flow-step {
-  padding: 0 0 10rem;
+  padding: 0 0 6rem;
   position: relative;
 }
-.flow-step:last-child { padding-bottom: 2rem; }
-.flow-step.left { grid-column: 1; text-align: right; }
-.flow-step.right { grid-column: 3; }
+.flow-step:last-child { padding-bottom: 4rem; }
+.flow-step.left { grid-column: 1; text-align: right; padding-right: 3rem; }
+.flow-step.right { grid-column: 2; padding-left: 3rem; }
 .flow-dot { display: none; }
 .flow-step.left .flow-dot { right: -2.6rem; }
 .flow-step.right .flow-dot { left: -2.6rem; }
