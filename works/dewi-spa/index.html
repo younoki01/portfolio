@@ -536,10 +536,7 @@ nav {
   line-height: 1;
   margin-bottom: 1.5rem;
 }
-.treatment-icon {
-  font-size: 1.8rem;
-  margin-bottom: 1.2rem;
-}
+.treatment-icon { display: none; }
 .treatment-name {
   font-family: 'Cinzel', serif;
   font-size: 1.2rem;
@@ -615,6 +612,8 @@ nav {
   padding: 3rem 2.5rem;
   position: relative;
   transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 .plan-card:hover {
   transform: translateY(-6px);
@@ -667,7 +666,7 @@ nav {
   margin-bottom: 2rem;
 }
 .plan-card.featured .plan-price-note { color: rgba(245,233,200,0.4); }
-.plan-features {
+.plan-features { flex: 1;
   list-style: none;
   margin-bottom: 2.5rem;
 }
@@ -701,6 +700,7 @@ nav {
   border: 1px solid var(--gold);
   color: var(--gold);
   transition: background 0.3s, color 0.3s;
+  margin-top: auto;
 }
 .btn-plan:hover, .plan-card.featured .btn-plan {
   background: var(--gold);
@@ -746,8 +746,8 @@ nav {
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(201,152,58,0.6);
 }
-.flow-step.left .flow-dot { right: -3.5rem; }
-.flow-step.right .flow-dot { left: -3.5rem; }
+.flow-step.left .flow-dot { right: -2.1rem; }
+.flow-step.right .flow-dot { left: -2.1rem; }
 .flow-step-num {
   font-family: 'Cinzel', serif;
   font-size: 0.55rem;
@@ -970,12 +970,16 @@ nav {
 }
 .cta-title {
   font-family: 'Cinzel', serif;
-  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
   font-weight: 300;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   color: var(--ivory);
-  line-height: 1.3;
+  line-height: 1.4;
   margin-bottom: 2.5rem;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .cta-title { white-space: normal; font-size: clamp(1.6rem, 6vw, 2.2rem); }
 }
 .cta-title span { color: var(--gold); }
 .cta-text {
@@ -1165,6 +1169,22 @@ footer {
   .flow-step-title { font-size: .95rem; }
   .flow-step-desc { font-size: .78rem; }
 }
+
+.footer-nav a { color: rgba(245,233,200,0.6); }
+.footer-nav a:hover { color: var(--gold); }
+.footer-copy { color: rgba(245,233,200,0.35); }
+.footer-address { color: rgba(245,233,200,0.5); }
+
+@media (max-width: 768px) {
+  .bridal-section { padding: 5rem 1.5rem; }
+  .bridal-plans { grid-template-columns: 1fr; gap: 1.5rem; }
+  .plan-card { padding: 2rem 1.5rem; }
+  .testimonial-section { padding: 5rem 1.5rem; }
+  footer { padding: 3rem 1.5rem; }
+  .footer-top { flex-direction: column; gap: 1.5rem; text-align: center; }
+  .footer-nav { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+  .reserve-section { padding: 5rem 1.5rem; }
+}
 </style>
 </head>
 <body>
@@ -1310,7 +1330,6 @@ footer {
     <div class="treatment-grid">
       <div class="treatment-card reveal">
         <div class="treatment-num">01</div>
-        <div class="treatment-icon">✨</div>
         <div class="treatment-name">Royal Facial</div>
         <div class="treatment-name-ja">ロイヤルフェイシャル</div>
         <div class="treatment-desc">クレンジングから導入・美容液・マスクまで。肌の奥深くから透明感を引き出す贅沢フルコース。</div>
@@ -1319,7 +1338,6 @@ footer {
       </div>
       <div class="treatment-card reveal">
         <div class="treatment-num">02</div>
-        <div class="treatment-icon">🌿</div>
         <div class="treatment-name">Bali Ritual</div>
         <div class="treatment-name-ja">バリリチュアルボディ</div>
         <div class="treatment-desc">バリ島の伝統スクラブ＋アロマオイルマッサージ。全身の巡りを整え、深いリラクゼーションへ。</div>
@@ -1328,7 +1346,6 @@ footer {
       </div>
       <div class="treatment-card reveal">
         <div class="treatment-num">03</div>
-        <div class="treatment-icon">💎</div>
         <div class="treatment-name">Lift & Glow</div>
         <div class="treatment-name-ja">リフトアップ小顔</div>
         <div class="treatment-desc">ハンドテクニック＋EMSで輪郭を整え、ハリと弾力のある肌を実現。即効性で人気のメニュー。</div>
@@ -1337,7 +1354,6 @@ footer {
       </div>
       <div class="treatment-card reveal">
         <div class="treatment-num">04</div>
-        <div class="treatment-icon">🌸</div>
         <div class="treatment-name">Pore Clarity</div>
         <div class="treatment-name-ja">毛穴集中ケア</div>
         <div class="treatment-desc">毛穴の詰まり・黒ずみ・開きに特化した集中ケア。スチーム＋クレイマスクで陶器肌へ。</div>
@@ -1346,7 +1362,6 @@ footer {
       </div>
       <div class="treatment-card reveal">
         <div class="treatment-num">05</div>
-        <div class="treatment-icon">🕯️</div>
         <div class="treatment-name">Head & Scalp</div>
         <div class="treatment-name-ja">ヘッドスパ＆頭皮ケア</div>
         <div class="treatment-desc">アロマオイルを用いた頭皮マッサージ。目の疲れ・肩こりの緩和と、育毛効果も期待できます。</div>
@@ -1355,7 +1370,6 @@ footer {
       </div>
       <div class="treatment-card reveal">
         <div class="treatment-num">06</div>
-        <div class="treatment-icon">👁️</div>
         <div class="treatment-name">Eye Premium</div>
         <div class="treatment-name-ja">プレミアムアイケア</div>
         <div class="treatment-desc">目元の乾燥・くすみ・むくみをケア。温冷交互マッサージ＋美容液導入で目元印象を劇的に改善。</div>
